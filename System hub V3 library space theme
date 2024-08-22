@@ -693,42 +693,41 @@ local ScreenGui -- Declared here without assignment to allow it to be reused
 
 local function MakeShowGui()
     if not ScreenGui then
-        ScreenGui = Instance.new("ScreenGui")
-        ScreenGui.Name = "ScreenGui"
-        ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-        ScreenGui.ResetOnSpawn = false
+        local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "ScreenGui"
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ResetOnSpawn = false
 
-        local Toggle = Instance.new("TextButton")
-        Toggle.Name = "Toggle"
-        Toggle.Parent = ScreenGui
-        Toggle.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-        Toggle.Position = UDim2.new(0, 0, 0.454706937, 0) 
-        Toggle.Size = UDim2.new(0, 120, 0, 40) 
-        Toggle.Font = Enum.Font.GothamBold 
-        Toggle.Text = "Show/Hide"
-        Toggle.TextColor3 = Color3.fromRGB(255, 255, 255) 
-        Toggle.TextSize = 20 
-        Toggle.Draggable = true
-        Toggle.Visible = true
+local Toggle = Instance.new("TextButton")
+Toggle.Name = "Toggle"
+Toggle.Parent = ScreenGui
+Toggle.BackgroundColor3 = Color3.fromRGB(10, 10, 25) -- Deep space blue
+Toggle.Position = UDim2.new(0, 0, 0.454706937, 0) 
+Toggle.Size = UDim2.new(0, 120, 0, 40) 
+Toggle.Font = Enum.Font.GothamBold 
+Toggle.Text = "Show/Hide"
+Toggle.TextColor3 = Color3.fromRGB(220, 220, 255) -- Light star white
+Toggle.TextSize = 20 
+Toggle.Draggable = true
+Toggle.Visible = true
 
-        local Corner1 = Instance.new("UICorner")
-        Corner1.CornerRadius = UDim.new(0, 10)
-        Corner1.Parent = Toggle
+local Corner1 = Instance.new("UICorner")
+Corner1.CornerRadius = UDim.new(0, 10)
+Corner1.Parent = Toggle
 
-        local Gradient1 = Instance.new("UIGradient")
-        Gradient1.Color = ColorSequence.new{
-            ColorSequenceKeypoint.new(0, Color3.fromRGB(50, 50, 50)),
-            ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0))
-        }
-        Gradient1.Rotation = 90
-        Gradient1.Parent = Toggle
+local Gradient1 = Instance.new("UIGradient")
+Gradient1.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(70, 70, 130)), -- Soft starlight blue
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 45))   -- Darker space blue
+}
+Gradient1.Rotation = 90
+Gradient1.Parent = Toggle
 
-        local Stroke1 = Instance.new("UIStroke")
-        Stroke1.Parent = Toggle
-        Stroke1.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-        Stroke1.Color = Color3.fromRGB(255, 255, 255) -- White border
-        Stroke1.Thickness = 2
-
+local Stroke1 = Instance.new("UIStroke")
+Stroke1.Parent = Toggle
+Stroke1.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+Stroke1.Color = Color3.fromRGB(90, 90, 160) -- Brighter starlight blue
+Stroke1.Thickness = 2
 
 
         -- Assuming MainWindow and Title are previously defined somewhere
