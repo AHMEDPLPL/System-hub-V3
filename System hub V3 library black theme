@@ -768,26 +768,18 @@ end
 MakeShowGui()
 
 	AddConnection(CloseBtn.MouseButton1Up, function()
-		MainWindow.Visible = false
-		UIHidden = true
-		OrionLib:MakeNotification({
-			Name = "Interface Hidden",
-			Content = "Tap RightShift to reopen the interface",
-			Time = 5
-		})
-		WindowConfig.CloseCallback()
-if Title then
-                Title.Visible = false
-            end
+		Orion:Destroy()
+local oldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui")
+if oldGui then
+	oldGui:Destroy()
+end
+
+local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
+if OldGui then
+	OldGui:Destroy()
+end
 	end)
 
-
-
-	AddConnection(UserInputService.InputBegan, function(Input)
-		if Input.KeyCode == Enum.KeyCode.RightShift and UIHidden then
-			MainWindow.Visible = true
-		end
-	end)
 
 	AddConnection(MinimizeBtn.MouseButton1Up, function()
 		if Minimized then
