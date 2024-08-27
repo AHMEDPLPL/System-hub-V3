@@ -57,8 +57,9 @@ if gethui then
 	for _, Interface in ipairs(gethui():GetChildren()) do
 		if Interface.Name == Orion.Name and Interface ~= Orion then
 			Interface:Destroy()
-             if game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui") then
-ScreenGui:Destroy()
+             local oldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui")
+if oldGui then
+	oldGui:Destroy()
 end
 		end
 	end
