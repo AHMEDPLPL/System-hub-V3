@@ -57,6 +57,9 @@ if gethui then
 	for _, Interface in ipairs(gethui():GetChildren()) do
 		if Interface.Name == Orion.Name and Interface ~= Orion then
 			Interface:Destroy()
+             if game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui") then
+ScreenGui:Destroy()
+end
 		end
 	end
 else
@@ -647,7 +650,7 @@ function OrionLib:MakeWindow(WindowConfig)
 
 local function MaketitleGui()
     local ScreenGui = Instance.new("ScreenGui")
-    ScreenGui.Name = "ScreenGui"
+    ScreenGui.Name = "SystemHubV3TitleGui"
     ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
     ScreenGui.ResetOnSpawn = false
 
@@ -687,14 +690,14 @@ end
 
 MaketitleGui()
 
-local Title = game.Players.LocalPlayer:WaitForChild("PlayerGui"):FindFirstChild("ScreenGui"):FindFirstChild("Title")
+local Title = game.Players.LocalPlayer:WaitForChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui"):FindFirstChild("Title")
 
 local ScreenGui -- Declared here without assignment to allow it to be reused
 
 local function MakeShowGui()
     if not ScreenGui then
         ScreenGui = Instance.new("ScreenGui")
-        ScreenGui.Name = "ScreenGui"
+        ScreenGui.Name = "SystemHubV3ToggleGui"
         ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
         ScreenGui.ResetOnSpawn = false
 
