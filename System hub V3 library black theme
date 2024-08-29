@@ -53,68 +53,48 @@ else
 	Orion.Parent = gethui() or game.CoreGui
 end
 
--- Continuously check for and destroy any old GUI instances
-local interfaceDestroyed = false
-
--- Destroy the Interface once
-if gethui then
-    for _, Interface in ipairs(gethui():GetChildren()) do
-        if Interface.Name == Orion.Name and Interface ~= Orion then
-            Interface:Destroy()
-            interfaceDestroyed = true
-
-            -- Destroy old GUIs when the Interface is destroyed
-            local oldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui")
-            if oldGui then
-                oldGui:Destroy()
-            end
-
-            local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
-            if OldGui then
-                OldGui:Destroy()
-            end
-        end
-    end
-else
-    for _, Interface in ipairs(game.CoreGui:GetChildren()) do
-        if Interface.Name == Orion.Name and Interface ~= Orion then
-            Interface:Destroy()
-            interfaceDestroyed = true
-
-            -- Destroy old GUIs when the Interface is destroyed
-            local oldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui")
-            if oldGui then
-                oldGui:Destroy()
-            end
-
-            local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
-            if OldGui then
-                OldGui:Destroy()
-            end
-        end
-    end
-end
-
--- Continuously check for and destroy any old GUI instances after the Interface is destroyed
 task.spawn(function()
     while true do
-        if interfaceDestroyed then
-            -- Check and remove old GUI elements from PlayerGui
-            local oldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui")
-            if oldGui then
-                oldGui:Destroy()
-            end
+        if gethui then
+            for _, Interface in ipairs(gethui():GetChildren()) do
+                if Interface.Name == Orion.Name and Interface ~= Orion then
+                    Interface:Destroy()
+                    
+                    local oldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui")
+                    if oldGui then
+                        oldGui:Destroy()
+                    end
 
-            local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
-            if OldGui then
-                OldGui:Destroy()
+                    local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
+                    if OldGui then
+                        OldGui:Destroy()
+                    end
+                end
+            end
+        else
+            
+            for _, Interface in ipairs(game.CoreGui:GetChildren()) do
+                if Interface.Name == Orion.Name and Interface ~= Orion then
+                    Interface:Destroy()
+                    
+                    local oldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui")
+                    if oldGui then
+                        oldGui:Destroy()
+                    end
+
+                    local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
+                    if OldGui then
+                        OldGui:Destroy()
+                    end
+                end
             end
         end
-
-        -- Wait before checking again to prevent performance issues
-        task.wait(0.001) -- Adjust the delay as needed
+        
+        
+        task.wait(0.5)
     end
 end)
+
 function OrionLib:IsRunning()
 	if gethui then
 		return Orion.Parent == gethui()
