@@ -58,7 +58,7 @@ local function cleanupOldGUIs()
     local player = game.Players.LocalPlayer
     local playerGui = player:FindFirstChild("PlayerGui")
 
-    -- List of your GUIs to clean up; add more if needed
+    -- List of GUI names to destroy; add more names if needed
     local guisToDestroy = {
         "SystemHubV3TitleGui",  -- Your title GUI name
         "SystemHubV3ToggleGui"  -- Your toggle GUI name
@@ -73,24 +73,31 @@ local function cleanupOldGUIs()
     end
 end
 
--- Check if using gethui() or CoreGui, and handle interface cleanup
-if gethui then
-    for _, interface in ipairs(gethui():GetChildren()) do
-        if interface.Name == Orion.Name and interface ~= Orion then
-            interface:Destroy()
-            cleanupOldGUIs()  -- Call cleanup when an Orion interface is destroyed
+-- Cleanup Orion interface and call cleanupOldGUIs when executing any script
+local function cleanupOrionInterfaces()
+    if gethui then
+        -- Destroy Orion interfaces from gethui()
+        for _, interface in ipairs(gethui():GetChildren()) do
+            if interface.Name == Orion.Name and interface ~= Orion then
+                interface:Destroy()
+                cleanupOldGUIs()  -- Ensure old GUIs are cleaned up
+            end
         end
-    end
-else
-    for _, interface in ipairs(game.CoreGui:GetChildren()) do
-        if interface.Name == Orion.Name and interface ~= Orion then
-            interface:Destroy()
-            cleanupOldGUIs()  -- Call cleanup when an Orion interface is destroyed
+    else
+        -- Destroy Orion interfaces from CoreGui
+        for _, interface in ipairs(game.CoreGui:GetChildren()) do
+            if interface.Name == Orion.Name and interface ~= Orion then
+                interface:Destroy()
+                cleanupOldGUIs()  -- Ensure old GUIs are cleaned up
+            end
         end
     end
 end
 
--- After cleanup, proceed with creating your new hub GUIs
+-- Call the cleanup function at the start of your script to ensure any old interfaces and GUIs are destroyed
+cleanupOrionInterfaces()
+
+-- Proceed with your hub creation logic after cleaning up old instances
 -- Example: Creating your new GUIs (replace with your actual creation code)
 -- local newTitleGui = Instance.new("ScreenGui", game.Players.LocalPlayer.PlayerGui)
 -- newTitleGui.Name = "SystemHubV3TitleGui"
