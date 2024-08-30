@@ -53,56 +53,44 @@ else
 	Orion.Parent = gethui() or game.CoreGui
 end
 
--- Function to clean up any existing GUIs created by your hub
-local function cleanupOldGUIs()
-    local player = game.Players.LocalPlayer
-    local playerGui = player:FindFirstChild("PlayerGui")
+if gethui then
+    for _, Interface in ipairs(gethui():GetChildren()) do
+        if Interface.Name == Orion.Name and Interface ~= Orion then
+            Orion:Destroy()
+            
+            -- Destroy SystemHubV3TitleGui if it exists
+            local oldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui")
+            if oldGui then
+                oldGui:Destroy()
+            end
 
-    -- List of GUI names to destroy; add more names if needed
-    local guisToDestroy = {
-        "SystemHubV3TitleGui",  -- Your title GUI name
-        "SystemHubV3ToggleGui"  -- Your toggle GUI name
-    }
-
-    -- Check and destroy each GUI if it exists
-    for _, guiName in ipairs(guisToDestroy) do
-        local gui = playerGui:FindFirstChild(guiName)
-        if gui then
-            gui:Destroy()
-        end
-    end
-end
-
--- Cleanup Orion interface and call cleanupOldGUIs when executing any script
-local function cleanupOrionInterfaces()
-    if gethui then
-        -- Destroy Orion interfaces from gethui()
-        for _, interface in ipairs(gethui():GetChildren()) do
-            if interface.Name == Orion.Name and interface ~= Orion then
-                interface:Destroy()
-                cleanupOldGUIs()  -- Ensure old GUIs are cleaned up
+            -- Destroy SystemHubV3ToggleGui if it exists
+            local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
+            if OldGui then
+                OldGui:Destroy()
             end
         end
-    else
-        -- Destroy Orion interfaces from CoreGui
-        for _, interface in ipairs(game.CoreGui:GetChildren()) do
-            if interface.Name == Orion.Name and interface ~= Orion then
-                interface:Destroy()
-                cleanupOldGUIs()  -- Ensure old GUIs are cleaned up
+    end
+else
+    for _, Interface in ipairs(game.CoreGui:GetChildren()) do
+        if Interface.Name == Orion.Name and Interface ~= Orion then
+            Orion:Destroy()
+
+            -- Destroy SystemHubV3TitleGui if it exists
+            local oldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui")
+            if oldGui then
+                oldGui:Destroy()
+            end
+
+            -- Destroy SystemHubV3ToggleGui if it exists
+            local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
+            if OldGui then
+                OldGui:Destroy()
             end
         end
     end
 end
 
--- Call the cleanup function at the start of your script to ensure any old interfaces and GUIs are destroyed
-cleanupOrionInterfaces()
-
--- Proceed with your hub creation logic after cleaning up old instances
--- Example: Creating your new GUIs (replace with your actual creation code)
--- local newTitleGui = Instance.new("ScreenGui", game.Players.LocalPlayer.PlayerGui)
--- newTitleGui.Name = "SystemHubV3TitleGui"
-
--- Add more GUI creation code here
 
 function OrionLib:IsRunning()
 	if gethui then
