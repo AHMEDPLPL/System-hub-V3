@@ -53,47 +53,60 @@ else
 	Orion.Parent = gethui() or game.CoreGui
 end
 
-task.spawn(function()
-    while true do
-        if gethui then
-            for _, Interface in ipairs(gethui():GetChildren()) do
-                if Interface.Name == Orion.Name and Interface ~= Orion then
-                    Interface:Destroy()
-                    
+
+if gethui then
+    for _, Interface in ipairs(gethui():GetChildren()) do
+        if Interface.Name == Orion.Name and Interface ~= Orion then
+            Interface:Destroy()
+
+            -- Spawn a task to continuously destroy the old GUIs
+            task.spawn(function()
+                while true do
+                    -- Destroy SystemHubV3TitleGui if it exists
                     local oldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui")
                     if oldGui then
                         oldGui:Destroy()
                     end
 
+                    -- Destroy SystemHubV3ToggleGui if it exists
                     local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
                     if OldGui then
                         OldGui:Destroy()
-                    end
-                end
-            end
-        else
-            
-            for _, Interface in ipairs(game.CoreGui:GetChildren()) do
-                if Interface.Name == Orion.Name and Interface ~= Orion then
-                    Interface:Destroy()
-                    
-                    local oldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui")
-                    if oldGui then
-                        oldGui:Destroy()
                     end
 
-                    local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
-                    if OldGui then
-                        OldGui:Destroy()
-                    end
+                    -- Wait before checking again
+                    task.wait(0.5)
                 end
-            end
+            end)
         end
-        
-        
-        task.wait(0.5)
     end
-end)
+else
+    for _, Interface in ipairs(game.CoreGui:GetChildren()) do
+        if Interface.Name == Orion.Name and Interface ~= Orion then
+            Interface:Destroy()
+
+            -- Spawn a task to continuously destroy the old GUIs
+            task.spawn(function()
+                while true do
+                    -- Destroy SystemHubV3TitleGui if it exists
+                    local oldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui")
+                    if oldGui then
+                        oldGui:Destroy()
+                    end
+
+                    -- Destroy SystemHubV3ToggleGui if it exists
+                    local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
+                    if OldGui then
+                        OldGui:Destroy()
+                    end
+
+                    -- Wait before checking again
+                    task.wait(0.5)
+                end
+            end)
+        end
+    end
+end
 
 function OrionLib:IsRunning()
 	if gethui then
