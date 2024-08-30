@@ -75,7 +75,7 @@ if gethui then
                     end
 
                     -- Wait before checking again
-                    task.wait(0.5)
+                    task.wait(0.0001)
                 end
             end)
         end
@@ -101,7 +101,7 @@ else
                     end
 
                     -- Wait before checking again
-                    task.wait(0.5)
+                    task.wait(0.0001)
                 end
             end)
         end
