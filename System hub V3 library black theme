@@ -53,32 +53,6 @@ else
 	Orion.Parent = gethui() or game.CoreGui
 end
 
-function deleteOrionIfDuplicate()
-    -- Find all instances of GUIs named "Orion"
-    local orionGuis = {}
-
-    -- Add all "Orion" GUIs found in the Player's PlayerGui
-    for _, gui in pairs(game.Players.LocalPlayer:WaitForChild("PlayerGui"):GetChildren()) do
-        if gui.Name == "Orion" then
-            table.insert(orionGuis, gui)
-        end
-    end
-
-    -- Check if there are more than one Orion GUIs
-    if #orionGuis > 1 then
-        -- Delete all except the first one found
-        for i = 2, #orionGuis do
-            orionGuis[i]:Destroy()
-        end
-        print("Duplicate Orion GUIs deleted.")
-    else
-        print("No duplicates found or only one Orion GUI.")
-    end
-end
-
--- Call the function
-deleteOrionIfDuplicate()
-
 if gethui then
     for _, Interface in ipairs(gethui():GetChildren()) do
         if Interface.Name == Orion.Name and Interface ~= Orion then
