@@ -780,9 +780,9 @@ end
 MakeShowGui()
 
 OrionLib:MakeNotification({
-			Name = "System",
+			Name = "System Hub",
 			Content = "Tap RightShift to Hide or Show the interface",
-			Time = 5
+			Time = 10
 		})
 
 AddConnection(UserInputService.InputBegan, function(Input)
