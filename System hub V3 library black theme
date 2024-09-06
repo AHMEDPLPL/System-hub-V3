@@ -671,6 +671,10 @@ function OrionLib:MakeWindow(WindowConfig)
 	end	
 
 	MakeDraggable(DragPoint, MainWindow)
+local IsOnMobile = table.find({
+	Enum.Platform.IOS,
+	Enum.Platform.Android
+}, UserInputService:GetPlatform())
 
 local function MaketitleGui()
     local ScreenGui = Instance.new("ScreenGui")
@@ -774,6 +778,18 @@ if Title then
 end
 
 MakeShowGui()
+
+OrionLib:MakeNotification({
+			Name = "System Hub",
+			Content = "Tap RightShift to Hide or Show the interface",
+			Time = 5
+		})
+
+if Input.KeyCode == Enum.KeyCode.RightShift then
+	MainWindow.Visible = not MainWindow.Visible		
+		end
+
+
 
 	AddConnection(CloseBtn.MouseButton1Up, function()
 		Orion:Destroy()
