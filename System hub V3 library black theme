@@ -780,14 +780,16 @@ end
 MakeShowGui()
 
 OrionLib:MakeNotification({
-			Name = "System Hub",
+			Name = "System",
 			Content = "Tap RightShift to Hide or Show the interface",
 			Time = 5
 		})
 
 AddConnection(UserInputService.InputBegan, function(Input)
 		if Input.KeyCode == Enum.KeyCode.RightShift then
-			MainWindow.Visible = false
+			if MainWindow then
+                MainWindow.Visible = not MainWindow.Visible  -- Toggle visibility
+            end
 		end
 	end)
 
