@@ -785,9 +785,11 @@ OrionLib:MakeNotification({
 			Time = 5
 		})
 
-if Input.KeyCode == Enum.KeyCode.RightShift then
-	MainWindow.Visible = not MainWindow.Visible		
+AddConnection(UserInputService.InputBegan, function(Input)
+		if Input.KeyCode == Enum.KeyCode.RightShift then
+			MainWindow.Visible = not MainWindow.Visible
 		end
+	end)
 
 
 
