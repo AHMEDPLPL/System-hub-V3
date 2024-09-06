@@ -787,7 +787,7 @@ OrionLib:MakeNotification({
 
 AddConnection(UserInputService.InputBegan, function(Input)
 		if Input.KeyCode == Enum.KeyCode.RightShift then
-			MainWindow.Visible = not MainWindow.Visible
+			MainWindow.Visible = false
 		end
 	end)
 
