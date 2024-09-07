@@ -799,7 +799,7 @@ if Title then
             end
 		end
 	end)
-
+end
 
 
 	AddConnection(CloseBtn.MouseButton1Up, function()
