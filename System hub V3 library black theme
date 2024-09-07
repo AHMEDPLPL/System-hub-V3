@@ -718,6 +718,8 @@ end
 
 MaketitleGui()
 
+if IsOnMobile then
+
 local Title = game.Players.LocalPlayer:WaitForChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui"):FindFirstChild("Title")
 
 local ScreenGui -- Declared here without assignment to allow it to be reused
@@ -779,6 +781,8 @@ end
 
 MakeShowGui()
 
+else
+
 OrionLib:MakeNotification({
 			Name = "System Hub",
 			Content = "Tap RightShift to Hide or Show the interface",
@@ -795,7 +799,7 @@ if Title then
             end
 		end
 	end)
-
+end
 
 	AddConnection(CloseBtn.MouseButton1Up, function()
 		Orion:Destroy()
