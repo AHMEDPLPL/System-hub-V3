@@ -91,38 +91,6 @@ else
     end
 end
 
-local function checkOrionDestruction()
-    while true do
-        wait(0.01) -- Check every second (adjust as needed)
-
-        local foundOrion = false
-        if gethui then
-            for _, Interface in ipairs(gethui():GetChildren()) do
-                if Interface.Name == Orion.Name then
-                    foundOrion = true
-                    break
-                end
-            end
-        else
-            for _, Interface in ipairs(game.CoreGui:GetChildren()) do
-                if Interface.Name == Orion.Name then
-                    foundOrion = true
-                    break
-                end
-            end
-        end
-
-        -- If Orion GUI is not found, execute the other script
-        if not foundOrion then
-            print("worked")
-            break -- Exit the loop after execution
-        end
-    end
-end
-
--- Start the destruction check in a separate thread
-spawn(checkOrionDestruction)
-
 function OrionLib:IsRunning()
 	if gethui then
 		return Orion.Parent == gethui()
@@ -834,7 +802,6 @@ if Title then
 end
 
 	AddConnection(CloseBtn.MouseButton1Up, function()
-pcall(function() getgenv().System_Hub = false end)
 		Orion:Destroy()
 local oldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui")
 if oldGui then
@@ -1946,24 +1913,3 @@ function OrionLib:Destroy()
 end
 
 return OrionLib
-
-local Orion = game.CoreGui:WaitForChild("Orion") -- The GUI you are tracking
-
--- Function to activate another script
-local function activateOtherScript()
-    print("Orion has been destroyed, activating another script!")
-    -- Example: loadstring(anotherScript)() or require(script)()
-end
-
--- Function to monitor the destruction of Orion
-local function monitorOrion()
-    -- Create a connection that checks if Orion is destroyed
-    Orion:GetPropertyChangedSignal("Parent"):Connect(function()
-        if not Orion:IsDescendantOf(game) then
-            activateOtherScript()
-        end
-    end)
-end
-
--- Start monitoring
-monitorOrion()
