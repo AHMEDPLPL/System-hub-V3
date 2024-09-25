@@ -1914,3 +1914,24 @@ function OrionLib:Destroy()
 end
 
 return OrionLib
+
+local Orion = game.CoreGui:WaitForChild("Orion") -- The GUI you are tracking
+
+-- Function to activate another script
+local function activateOtherScript()
+    print("Orion has been destroyed, activating another script!")
+    -- Example: loadstring(anotherScript)() or require(script)()
+end
+
+-- Function to monitor the destruction of Orion
+local function monitorOrion()
+    -- Create a connection that checks if Orion is destroyed
+    Orion:GetPropertyChangedSignal("Parent"):Connect(function()
+        if not Orion:IsDescendantOf(game) then
+            activateOtherScript()
+        end
+    end)
+end
+
+-- Start monitoring
+monitorOrion()
