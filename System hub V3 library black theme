@@ -802,6 +802,7 @@ if Title then
 end
 
 	AddConnection(CloseBtn.MouseButton1Up, function()
+pcall(function() getgenv().System_Hub = false end)
 		Orion:Destroy()
 local oldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui")
 if oldGui then
