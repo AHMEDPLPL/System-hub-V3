@@ -91,15 +91,6 @@ else
     end
 end
 
-while true do
-    if Interface:IsDescendantOf(nil) then
-        -- Call your function or execute another script here
-        print("Orion GUI was destroyed. Executing another script.")
-        -- Example: loadstring(game:HttpGet("https://example.com/your-script.lua"))
-    end
-    wait(0.01) -- Adjust the wait time as needed to prevent excessive CPU usage
-end
-
 function OrionLib:IsRunning()
 	if gethui then
 		return Orion.Parent == gethui()
