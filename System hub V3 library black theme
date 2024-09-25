@@ -114,7 +114,7 @@ local function checkOrionDestruction()
 
         -- If Orion GUI is not found, execute the other script
         if not foundOrion then
-            executeAnotherScript()
+            print("worked")
             break -- Exit the loop after execution
         end
     end
