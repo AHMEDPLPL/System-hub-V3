@@ -12,12 +12,12 @@ local OrionLib = {
 	Flags = {},
 	Themes = {
 		Default = {
-    Main = Color3.fromRGB(0, 51, 102),     -- Deep Blue
-    Second = Color3.fromRGB(0, 76, 153),   -- Ocean Blue
-    Stroke = Color3.fromRGB(0, 204, 204),  -- Aqua
-    Divider = Color3.fromRGB(102, 255, 255), -- Light Cyan
-    Text = Color3.fromRGB(240, 255, 255),  -- Azure White
-    TextDark = Color3.fromRGB(175, 238, 238) -- Pale Turquoise
+			Main = Color3.fromRGB(25, 25, 25),
+			Second = Color3.fromRGB(32, 32, 32),
+			Stroke = Color3.fromRGB(60, 60, 60),
+			Divider = Color3.fromRGB(60, 60, 60),
+			Text = Color3.fromRGB(240, 240, 240),
+			TextDark = Color3.fromRGB(150, 150, 150)
 		}
 	},
 	SelectedTheme = "Default",
@@ -45,7 +45,7 @@ local function GetIcon(IconName)
 end   
 
 local Orion = Instance.new("ScreenGui")
-Orion.Name = "Orion"
+Orion.Name = "Orio"
 if syn then
 	syn.protect_gui(Orion)
 	Orion.Parent = game.CoreGui
@@ -54,17 +54,41 @@ else
 end
 
 if gethui then
-	for _, Interface in ipairs(gethui():GetChildren()) do
-		if Interface.Name == Orion.Name and Interface ~= Orion then
-			Interface:Destroy()
-		end
-	end
+    for _, Interface in ipairs(gethui():GetChildren()) do
+        if Interface.Name == Orion.Name and Interface ~= Orion then
+            Interface:Destroy()
+            
+            -- Destroy SystemHubV3TitleGui if it exists
+            local oldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui")
+            if oldGui then
+                oldGui:Destroy()
+            end
+
+            -- Destroy SystemHubV3ToggleGui if it exists
+            local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
+            if OldGui then
+                OldGui:Destroy()
+            end
+        end
+    end
 else
-	for _, Interface in ipairs(game.CoreGui:GetChildren()) do
-		if Interface.Name == Orion.Name and Interface ~= Orion then
-			Interface:Destroy()
-		end
-	end
+    for _, Interface in ipairs(game.CoreGui:GetChildren()) do
+        if Interface.Name == Orion.Name and Interface ~= Orion then
+            Interface:Destroy()
+
+            -- Destroy SystemHubV3TitleGui if it exists
+            local oldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui")
+            if oldGui then
+                oldGui:Destroy()
+            end
+
+            -- Destroy SystemHubV3ToggleGui if it exists
+            local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
+            if OldGui then
+                OldGui:Destroy()
+            end
+        end
+    end
 end
 
 function OrionLib:IsRunning()
@@ -75,6 +99,9 @@ function OrionLib:IsRunning()
 	end
 
 end
+
+-- Function to delete an Orion GUI if another Orion exists
+
 
 local function AddConnection(Signal, Function)
 	if (not OrionLib:IsRunning()) then
@@ -644,10 +671,14 @@ function OrionLib:MakeWindow(WindowConfig)
 	end	
 
 	MakeDraggable(DragPoint, MainWindow)
+local IsOnMobile = table.find({
+	Enum.Platform.IOS,
+	Enum.Platform.Android
+}, UserInputService:GetPlatform())
 
 local function MaketitleGui()
     local ScreenGui = Instance.new("ScreenGui")
-    ScreenGui.Name = "ScreenGui"
+    ScreenGui.Name = "SystemHubV3TitleGui"
     ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
     ScreenGui.ResetOnSpawn = false
 
@@ -687,14 +718,16 @@ end
 
 MaketitleGui()
 
-local Title = game.Players.LocalPlayer:WaitForChild("PlayerGui"):FindFirstChild("ScreenGui"):FindFirstChild("Title")
+if IsOnMobile then
+
+local Title = game.Players.LocalPlayer:WaitForChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui"):FindFirstChild("Title")
 
 local ScreenGui -- Declared here without assignment to allow it to be reused
 
 local function MakeShowGui()
     if not ScreenGui then
         ScreenGui = Instance.new("ScreenGui")
-        ScreenGui.Name = "ScreenGui"
+        ScreenGui.Name = "SystemHubV3ToggleGui"
         ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
         ScreenGui.ResetOnSpawn = false
 
@@ -748,27 +781,40 @@ end
 
 MakeShowGui()
 
-	AddConnection(CloseBtn.MouseButton1Up, function()
-		MainWindow.Visible = false
-		UIHidden = true
-		OrionLib:MakeNotification({
-			Name = "Interface Hidden",
-			Content = "Tap RightShift to reopen the interface",
-			Time = 5
+else
+
+OrionLib:MakeNotification({
+			Name = "System Hub",
+			Content = "Tap RightShift to Hide or Show the interface",
+			Time = 10
 		})
-		WindowConfig.CloseCallback()
-if Title then
-                Title.Visible = false
+
+AddConnection(UserInputService.InputBegan, function(Input)
+		if Input.KeyCode == Enum.KeyCode.RightShift then
+			if MainWindow then
+                MainWindow.Visible = not MainWindow.Visible  -- Toggle visibility
             end
-	end)
-
-
-
-	AddConnection(UserInputService.InputBegan, function(Input)
-		if Input.KeyCode == Enum.KeyCode.RightShift and UIHidden then
-			MainWindow.Visible = true
+if Title then
+                Title.Visible = not Title.Visible
+            end
 		end
 	end)
+end
+
+	AddConnection(CloseBtn.MouseButton1Up, function()
+pcall(function() getgenv().System_Hub = false end)
+		Orion:Destroy()
+local oldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui")
+if oldGui then
+	oldGui:Destroy()
+end
+
+local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
+if OldGui then
+	OldGui:Destroy()
+end
+	end)
+
 
 	AddConnection(MinimizeBtn.MouseButton1Up, function()
 		if Minimized then
