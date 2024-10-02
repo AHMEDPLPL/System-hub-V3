@@ -711,7 +711,7 @@ local function MaketitleGui()
                 hue = 0
             end
             Title.TextColor3 = RainbowColor(hue)
-            wait(0.04) 
+            wait(0.08) 
         end
     end)()
 end
