@@ -496,7 +496,28 @@ function OrionLib:MakeWindow(WindowConfig)
 	local UIHidden = false
 
 	WindowConfig = WindowConfig or {}
-	WindowConfig.Name = WindowConfig.Name or "Orion Library"
+-- Function to generate a rainbow color effect
+local function rainbowColor(frequency)
+    local r = math.sin(frequency * tick() + 0) * 127 + 128
+    local g = math.sin(frequency * tick() + 2) * 127 + 128
+    local b = math.sin(frequency * tick() + 4) * 127 + 128
+    return Color3.fromRGB(r, g, b)
+end
+
+-- Set WindowConfig.Name
+WindowConfig.Name = WindowConfig.Name or "Orion Library"
+
+-- Assuming you're applying this to the actual UI element for WindowConfig
+spawn(function()
+    while true do
+        local rainbow = rainbowColor(1)  -- Adjust the frequency if needed
+        -- Set the color of WindowConfig.Name's text element in the GUI
+        -- Assuming you have a TextLabel for WindowConfig.Name:
+        WindowConfig.TextLabel.TextColor3 = rainbow
+        
+        wait(0.1)  -- Update the color every 0.1 seconds
+    end
+end)
 	WindowConfig.ConfigFolder = WindowConfig.ConfigFolder or WindowConfig.Name
 	WindowConfig.SaveConfig = WindowConfig.SaveConfig or false
 	WindowConfig.HidePremium = WindowConfig.HidePremium or false
