@@ -386,6 +386,13 @@ local NotificationHolder = SetProps(SetChildren(MakeElement("TFrame"), {
 	Parent = Orion
 })
 
+Main = Color3.fromRGB(10, 10, 25),     -- Deep space blue
+Second = Color3.fromRGB(20, 20, 45),   -- Darker space blue
+Stroke = Color3.fromRGB(70, 70, 130),  -- Soft starlight blue
+Divider = Color3.fromRGB(90, 90, 160), -- Brighter starlight blue
+Text = Color3.fromRGB(220, 220, 255),  -- Light star white
+TextDark = Color3.fromRGB(120, 120, 160) -- Faded starlight grey
+
 function OrionLib:MakeNotification(NotificationConfig)
     spawn(function()
         NotificationConfig.Name = NotificationConfig.Name or "Notification"
