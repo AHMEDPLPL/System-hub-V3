@@ -282,7 +282,8 @@ end
 
 CreateElement("Corner", function(Scale, Offset)
 	local Corner = Create("UICorner", {
-		CornerRadius = UDim.new(Scale or 0, Offset or 10)
+		CornerRadius = UDim.new(Scale or 0, Offset or 10),
+BackgroundTransparency = 1
 	})
 	return Corner
 end)
@@ -290,7 +291,8 @@ end)
 CreateElement("Stroke", function(Color, Thickness)
 	local Stroke = Create("UIStroke", {
 		Color = Color or Color3.fromRGB(255, 255, 255),
-		Thickness = Thickness or 1
+		Thickness = Thickness or 1,
+BackgroundTransparency = 1
 	})
 	return Stroke
 end)
@@ -298,7 +300,8 @@ end)
 CreateElement("List", function(Scale, Offset)
 	local List = Create("UIListLayout", {
 		SortOrder = Enum.SortOrder.LayoutOrder,
-		Padding = UDim.new(Scale or 0, Offset or 0)
+		Padding = UDim.new(Scale or 0, Offset or 0),
+BackgroundTransparency = 1
 	})
 	return List
 end)
@@ -308,7 +311,8 @@ CreateElement("Padding", function(Bottom, Left, Right, Top)
 		PaddingBottom = UDim.new(0, Bottom or 4),
 		PaddingLeft = UDim.new(0, Left or 4),
 		PaddingRight = UDim.new(0, Right or 4),
-		PaddingTop = UDim.new(0, Top or 4)
+		PaddingTop = UDim.new(0, Top or 4),
+BackgroundTransparency = 1
 	})
 	return Padding
 end)
@@ -323,7 +327,8 @@ end)
 CreateElement("Frame", function(Color)
 	local Frame = Create("Frame", {
 		BackgroundColor3 = Color or Color3.fromRGB(255, 255, 255),
-		BorderSizePixel = 0
+		BorderSizePixel = 0,
+BackgroundTransparency = 1
 	})
 	return Frame
 end)
@@ -332,9 +337,11 @@ CreateElement("RoundFrame", function(Color, Scale, Offset)
 	local Frame = Create("Frame", {
 		BackgroundColor3 = Color or Color3.fromRGB(255, 255, 255),
 		BorderSizePixel = 0
+BackgroundTransparency = 1
 	}, {
 		Create("UICorner", {
 			CornerRadius = UDim.new(Scale, Offset)
+BackgroundTransparency = 1
 		})
 	})
 	return Frame
