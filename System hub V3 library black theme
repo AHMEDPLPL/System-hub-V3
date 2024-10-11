@@ -1911,6 +1911,15 @@ end
 
 function OrionLib:Destroy()
 	Orion:Destroy()
+local oldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui")
+if oldGui then
+	oldGui:Destroy()
+end
+
+local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
+if OldGui then
+	OldGui:Destroy()
+end
 end
 
 return OrionLib
