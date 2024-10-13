@@ -676,45 +676,7 @@ local IsOnMobile = table.find({
 	Enum.Platform.Android
 }, UserInputService:GetPlatform())
 
-local function MaketitleGui()
-    local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "ScreenGui"
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-ScreenGui.ResetOnSpawn = false
 
-local Title = Instance.new("TextLabel")
-Title.Name = "Title"
-Title.Parent = ScreenGui
-Title.BackgroundColor3 = Color3.fromRGB(10, 10, 25) -- Deep space blue
-Title.Position = UDim2.new(0.5, -100, 0.01, 0) 
-Title.Size = UDim2.new(0, 200, 0, 40)
-Title.Font = Enum.Font.GothamBold
-Title.Text = "System hub V3"
-Title.TextColor3 = Color3.fromRGB(220, 220, 255) -- Light star white
-Title.TextSize = 25
-Title.BackgroundTransparency = 0.3
-Title.Visible = true 
-
-local TitleCorner = Instance.new("UICorner")
-TitleCorner.CornerRadius = UDim.new(0, 10)
-TitleCorner.Parent = Title
-
-local function RainbowColor(hue)
-    return Color3.fromHSV(hue, 0.7, 1) -- Soft starlight effect
-end
-
-coroutine.wrap(function()
-    local hue = 0
-    while true do
-        hue = hue + 0.01
-        if hue >= 1 then
-            hue = 0
-        end
-        Title.TextColor3 = RainbowColor(hue)
-        wait(0.08) 
-    end
-end)()
-end
 
 MaketitleGui()
 
