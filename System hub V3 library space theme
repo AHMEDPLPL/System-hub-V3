@@ -1,4 +1,4 @@
- local UserInputService = game:GetService("UserInputService")
+local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -45,7 +45,7 @@ local function GetIcon(IconName)
 end   
 
 local Orion = Instance.new("ScreenGui")
-Orion.Name = "Orion"
+Orion.Name = "Orio"
 if syn then
 	syn.protect_gui(Orion)
 	Orion.Parent = game.CoreGui
@@ -54,17 +54,41 @@ else
 end
 
 if gethui then
-	for _, Interface in ipairs(gethui():GetChildren()) do
-		if Interface.Name == Orion.Name and Interface ~= Orion then
-			Interface:Destroy()
-		end
-	end
+    for _, Interface in ipairs(gethui():GetChildren()) do
+        if Interface.Name == Orion.Name and Interface ~= Orion then
+            Interface:Destroy()
+            
+            -- Destroy SystemHubV3TitleGui if it exists
+            local oldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui")
+            if oldGui then
+                oldGui:Destroy()
+            end
+
+            -- Destroy SystemHubV3ToggleGui if it exists
+            local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
+            if OldGui then
+                OldGui:Destroy()
+            end
+        end
+    end
 else
-	for _, Interface in ipairs(game.CoreGui:GetChildren()) do
-		if Interface.Name == Orion.Name and Interface ~= Orion then
-			Interface:Destroy()
-		end
-	end
+    for _, Interface in ipairs(game.CoreGui:GetChildren()) do
+        if Interface.Name == Orion.Name and Interface ~= Orion then
+            Interface:Destroy()
+
+            -- Destroy SystemHubV3TitleGui if it exists
+            local oldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui")
+            if oldGui then
+                oldGui:Destroy()
+            end
+
+            -- Destroy SystemHubV3ToggleGui if it exists
+            local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
+            if OldGui then
+                OldGui:Destroy()
+            end
+        end
+    end
 end
 
 function OrionLib:IsRunning()
@@ -75,6 +99,9 @@ function OrionLib:IsRunning()
 	end
 
 end
+
+-- Function to delete an Orion GUI if another Orion exists
+
 
 local function AddConnection(Signal, Function)
 	if (not OrionLib:IsRunning()) then
@@ -386,74 +413,66 @@ local NotificationHolder = SetProps(SetChildren(MakeElement("TFrame"), {
 	Parent = Orion
 })
 
-Main = Color3.fromRGB(10, 10, 25),     -- Deep space blue
-Second = Color3.fromRGB(20, 20, 45),   -- Darker space blue
-Stroke = Color3.fromRGB(70, 70, 130),  -- Soft starlight blue
-Divider = Color3.fromRGB(90, 90, 160), -- Brighter starlight blue
-Text = Color3.fromRGB(220, 220, 255),  -- Light star white
-TextDark = Color3.fromRGB(120, 120, 160) -- Faded starlight grey
-
 function OrionLib:MakeNotification(NotificationConfig)
-    spawn(function()
-        NotificationConfig.Name = NotificationConfig.Name or "Notification"
-        NotificationConfig.Content = NotificationConfig.Content or "Test"
-        NotificationConfig.Image = NotificationConfig.Image or "rbxassetid://4384403532"
-        NotificationConfig.Time = NotificationConfig.Time or 15
+	spawn(function()
+		NotificationConfig.Name = NotificationConfig.Name or "Notification"
+		NotificationConfig.Content = NotificationConfig.Content or "Test"
+		NotificationConfig.Image = NotificationConfig.Image or "rbxassetid://4384403532"
+		NotificationConfig.Time = NotificationConfig.Time or 15
 
-        local NotificationParent = SetProps(MakeElement("TFrame"), {
-            Size = UDim2.new(1, 0, 0, 0),
-            AutomaticSize = Enum.AutomaticSize.Y,
-            Parent = NotificationHolder
-        })
+		local NotificationParent = SetProps(MakeElement("TFrame"), {
+			Size = UDim2.new(1, 0, 0, 0),
+			AutomaticSize = Enum.AutomaticSize.Y,
+			Parent = NotificationHolder
+		})
 
-        local NotificationFrame = SetChildren(SetProps(MakeElement("RoundFrame", Main, 0, 10), {  -- Change to Main color
-            Parent = NotificationParent, 
-            Size = UDim2.new(1, 0, 0, 0),
-            Position = UDim2.new(1, -55, 0, 0),
-            BackgroundTransparency = 0,
-            AutomaticSize = Enum.AutomaticSize.Y
-        }), {
-            MakeElement("Stroke", Stroke, 1.2),  -- Change to Stroke color
-            MakeElement("Padding", 12, 12, 12, 12),
-            SetProps(MakeElement("Image", NotificationConfig.Image), {
-                Size = UDim2.new(0, 20, 0, 20),
-                ImageColor3 = Text,  -- Change icon color to Text
-                Name = "Icon"
-            }),
-            SetProps(MakeElement("Label", NotificationConfig.Name, 15), {
-                Size = UDim2.new(1, -30, 0, 20),
-                Position = UDim2.new(0, 30, 0, 0),
-                Font = Enum.Font.GothamBold,
-                Name = "Title",
-                TextColor3 = Text,  -- Change title text color to Text
-            }),
-            SetProps(MakeElement("Label", NotificationConfig.Content, 14), {
-                Size = UDim2.new(1, 0, 0, 0),
-                Position = UDim2.new(0, 0, 0, 25),
-                Font = Enum.Font.GothamSemibold,
-                Name = "Content",
-                AutomaticSize = Enum.AutomaticSize.Y,
-                TextColor3 = TextDark,  -- Change content text color to TextDark
-                TextWrapped = true
-            })
-        })
+		local NotificationFrame = SetChildren(SetProps(MakeElement("RoundFrame", Color3.fromRGB(25, 25, 25), 0, 10), {
+			Parent = NotificationParent, 
+			Size = UDim2.new(1, 0, 0, 0),
+			Position = UDim2.new(1, -55, 0, 0),
+			BackgroundTransparency = 0,
+			AutomaticSize = Enum.AutomaticSize.Y
+		}), {
+			MakeElement("Stroke", Color3.fromRGB(93, 93, 93), 1.2),
+			MakeElement("Padding", 12, 12, 12, 12),
+			SetProps(MakeElement("Image", NotificationConfig.Image), {
+				Size = UDim2.new(0, 20, 0, 20),
+				ImageColor3 = Color3.fromRGB(240, 240, 240),
+				Name = "Icon"
+			}),
+			SetProps(MakeElement("Label", NotificationConfig.Name, 15), {
+				Size = UDim2.new(1, -30, 0, 20),
+				Position = UDim2.new(0, 30, 0, 0),
+				Font = Enum.Font.GothamBold,
+				Name = "Title"
+			}),
+			SetProps(MakeElement("Label", NotificationConfig.Content, 14), {
+				Size = UDim2.new(1, 0, 0, 0),
+				Position = UDim2.new(0, 0, 0, 25),
+				Font = Enum.Font.GothamSemibold,
+				Name = "Content",
+				AutomaticSize = Enum.AutomaticSize.Y,
+				TextColor3 = Color3.fromRGB(200, 200, 200),
+				TextWrapped = true
+			})
+		})
 
-        TweenService:Create(NotificationFrame, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Position = UDim2.new(0, 0, 0, 0)}):Play()
+		TweenService:Create(NotificationFrame, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Position = UDim2.new(0, 0, 0, 0)}):Play()
 
-        wait(NotificationConfig.Time - 0.88)
-        TweenService:Create(NotificationFrame.Icon, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
-        TweenService:Create(NotificationFrame, TweenInfo.new(0.8, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.6}):Play()
-        wait(0.3)
-        TweenService:Create(NotificationFrame.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 0.9}):Play()
-        TweenService:Create(NotificationFrame.Title, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 0.4}):Play()
-        TweenService:Create(NotificationFrame.Content, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 0.5}):Play()
-        wait(0.05)
+		wait(NotificationConfig.Time - 0.88)
+		TweenService:Create(NotificationFrame.Icon, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+		TweenService:Create(NotificationFrame, TweenInfo.new(0.8, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.6}):Play()
+		wait(0.3)
+		TweenService:Create(NotificationFrame.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 0.9}):Play()
+		TweenService:Create(NotificationFrame.Title, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 0.4}):Play()
+		TweenService:Create(NotificationFrame.Content, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 0.5}):Play()
+		wait(0.05)
 
-        NotificationFrame:TweenPosition(UDim2.new(1, 20, 0, 0),'In','Quint',0.8,true)
-        wait(1.35)
-        NotificationFrame:Destroy()
-    end)
-end
+		NotificationFrame:TweenPosition(UDim2.new(1, 20, 0, 0),'In','Quint',0.8,true)
+		wait(1.35)
+		NotificationFrame:Destroy()
+	end)
+end    
 
 function OrionLib:Init()
 	if OrionLib.SaveCfg then	
@@ -652,6 +671,10 @@ function OrionLib:MakeWindow(WindowConfig)
 	end	
 
 	MakeDraggable(DragPoint, MainWindow)
+local IsOnMobile = table.find({
+	Enum.Platform.IOS,
+	Enum.Platform.Android
+}, UserInputService:GetPlatform())
 
 local function MaketitleGui()
     local ScreenGui = Instance.new("ScreenGui")
@@ -695,7 +718,9 @@ end
 
 MaketitleGui()
 
-local Title = game.Players.LocalPlayer:WaitForChild("PlayerGui"):FindFirstChild("ScreenGui"):FindFirstChild("Title")
+if IsOnMobile then
+
+local Title = game.Players.LocalPlayer:WaitForChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui"):FindFirstChild("Title")
 
 local ScreenGui -- Declared here without assignment to allow it to be reused
 
@@ -752,30 +777,41 @@ if Title then
         end)
     end
 end
-
 MakeShowGui()
+else
 
-	AddConnection(CloseBtn.MouseButton1Up, function()
-		MainWindow.Visible = false
-		UIHidden = true
-		OrionLib:MakeNotification({
-			Name = "Interface Hidden",
-			Content = "Tap RightShift to reopen the interface",
-			Time = 5
+OrionLib:MakeNotification({
+			Name = "System Hub",
+			Content = "Tap RightShift to Hide or Show the interface",
+			Time = 10
 		})
-		WindowConfig.CloseCallback()
-if Title then
-                Title.Visible = false
+
+AddConnection(UserInputService.InputBegan, function(Input)
+		if Input.KeyCode == Enum.KeyCode.RightShift then
+			if MainWindow then
+                MainWindow.Visible = not MainWindow.Visible  -- Toggle visibility
             end
-	end)
-
-
-
-	AddConnection(UserInputService.InputBegan, function(Input)
-		if Input.KeyCode == Enum.KeyCode.RightShift and UIHidden then
-			MainWindow.Visible = true
+if Title then
+                Title.Visible = not Title.Visible
+            end
 		end
 	end)
+end
+
+	AddConnection(CloseBtn.MouseButton1Up, function()
+pcall(function() getgenv().System_Hub = false end)
+		Orion:Destroy()
+local oldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui")
+if oldGui then
+	oldGui:Destroy()
+end
+
+local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
+if OldGui then
+	OldGui:Destroy()
+end
+	end)
+
 
 	AddConnection(MinimizeBtn.MouseButton1Up, function()
 		if Minimized then
@@ -1872,6 +1908,15 @@ end
 
 function OrionLib:Destroy()
 	Orion:Destroy()
+local oldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui")
+if oldGui then
+	oldGui:Destroy()
+end
+
+local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
+if OldGui then
+	OldGui:Destroy()
+end
 end
 
 return OrionLib
