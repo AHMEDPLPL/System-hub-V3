@@ -722,7 +722,6 @@ if IsOnMobile then
 
 local Title = game.Players.LocalPlayer:WaitForChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui"):FindFirstChild("Title")
 
-if IsOnMobile then
 
 local ScreenGui -- Declared here without assignment to allow it to be reused
 
