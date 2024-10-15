@@ -678,19 +678,19 @@ local IsOnMobile = table.find({
 
 local function MaketitleGui()
     local ScreenGui = Instance.new("ScreenGui")
-    ScreenGui.Name = "SystemHubV3Gui" -- Give it a unique name
+    ScreenGui.Name = "SystemHubV3TitleGui"
     ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
     ScreenGui.ResetOnSpawn = false
 
     local Title = Instance.new("TextLabel")
     Title.Name = "Title"
     Title.Parent = ScreenGui
-    Title.BackgroundColor3 = Color3.fromRGB(10, 10, 25) -- Deep space blue
+    Title.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
     Title.Position = UDim2.new(0.5, -100, 0.01, 0) 
     Title.Size = UDim2.new(0, 200, 0, 40)
     Title.Font = Enum.Font.GothamBold
-    Title.Text = "System Hub V3"
-    Title.TextColor3 = Color3.fromRGB(220, 220, 255) -- Light star white
+    Title.Text = "System hub V3"
+    Title.TextColor3 = Color3.fromRGB(255, 255, 255)
     Title.TextSize = 25
     Title.BackgroundTransparency = 0.3
     Title.Visible = true 
@@ -700,7 +700,7 @@ local function MaketitleGui()
     TitleCorner.Parent = Title
 
     local function RainbowColor(hue)
-        return Color3.fromHSV(hue, 0.7, 1) -- Soft starlight effect
+        return Color3.fromHSV(hue, 1, 1)
     end
 
     coroutine.wrap(function()
@@ -718,9 +718,9 @@ end
 
 MaketitleGui()
 
--- Ensure you're looking for the correct ScreenGui name here
-local Title = game.Players.LocalPlayer:WaitForChild("PlayerGui"):FindFirstChild("SystemHubV3Gui"):FindFirstChild("Title")
+if IsOnMobile then
 
+local Title = game.Players.LocalPlayer:WaitForChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui"):FindFirstChild("Title")
 
 if IsOnMobile then
 
