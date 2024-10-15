@@ -728,7 +728,7 @@ local ScreenGui -- Declared here without assignment to allow it to be reused
 local function MakeShowGui()
     if not ScreenGui then
         local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "ScreenGui"
+ScreenGui.Name = "SystemHubV3ToggleGui"
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 ScreenGui.ResetOnSpawn = false
 
