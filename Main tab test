@@ -1,0 +1,129 @@
+return function(Window, OrionLib)
+    local Tab = Window:MakeTab({
+        Name = "Main",
+        Icon = "rbxassetid://6026568227",
+        PremiumOnly = false
+    })
+
+    Tab:AddParagraph(
+        "Welcome, " .. game.Players.LocalPlayer.DisplayName,
+        "Hello @" .. game.Players.LocalPlayer.Name .. 
+        "! We're glad to have you here. Feel free to explore all the features available in System Hub V3. If you have any new ideas that you’d like to add to the hub, send us feedback, and we’ll consider adding it, or just DM me ahmed121212 in discord. Enjoy your time!"
+    )
+
+    Tab:AddParagraph(
+        "Scripts issues",
+        "If you notice scripts that are not working or the hub not working properly in a game, or if the hub is not working with your executor, please provide feedback so we can fix the issue as soon as possible."
+    )
+
+    local HttpService = game:GetService("HttpService")
+    local player = game.Players.LocalPlayer
+    local feedbackTimestamps = {}
+    local placeName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name -- Define placeName
+
+    local function cleanupOldTimestamps()
+        local currentTime = tick()
+        for i = #feedbackTimestamps, 1, -1 do
+            if currentTime - feedbackTimestamps[i] > 1200 then
+                table.remove(feedbackTimestamps, i)
+            end
+        end
+    end
+
+    local function sendFeedback(txt)
+        cleanupOldTimestamps()
+        if #feedbackTimestamps >= 10 then
+            OrionLib:MakeNotification({
+                Name = "System Hub",
+                Content = "You can only send 10 feedbacks every 20 minutes.",
+                Image = "rbxassetid://6031075938",
+                Time = 5
+            })
+            return
+        end
+
+        local webhook = "https://discord.com/api/webhooks/1276593397662089337/i-Y7kwaK9OxgH9OFosXclajJhTCzDfB_oHc3Zo2PJ7RZCFYLhGjLQ7t0H7z823bougZv"
+        local data = {
+            ["content"] = "",
+            ["embeds"] = {
+                {
+                    ["title"] = "Feedback From : " .. player.Name,
+                    ["description"] = "Executor : "..(identifyexecutor and identifyexecutor() or "Unknown").."   Game : "..placeName.."           FeedBack : "..txt
+                }
+            }
+        }
+
+        local jsonData = HttpService:JSONEncode(data)
+        local headers = {
+            ["Content-Type"] = "application/json"
+        }
+
+        local request = 
+            (syn and syn.request) 
+            or (http and http.request) 
+            or http_request 
+            or (fluxus and fluxus.request) 
+            or (oxygen and oxygen.http) 
+            or (comet and comet.request) 
+            or (yoink and yoink.request) 
+            or (venus and venus.request) 
+            or (WRD and WRD.request) 
+            or (solara and solara.request) 
+            or HttpPost
+
+        if request then
+            request({
+                Url = webhook,
+                Method = "POST",
+                Headers = headers,
+                Body = jsonData
+            })
+            table.insert(feedbackTimestamps, tick())
+            OrionLib:MakeNotification({
+                Name = "System Hub",
+                Content = "Feedback sent successfully",
+                Image = "rbxassetid://6031075938",
+                Time = 5
+            })
+        else
+            OrionLib:MakeNotification({
+                Name = "System Hub",
+                Content = "Failed to send feedback",
+                Image = "rbxassetid://6031075938",
+                Time = 5
+            })
+            OrionLib:MakeNotification({
+                Name = "System Hub",
+                Content = "Your Executor Request Is Undetected or Your Executor Doesn't Support Requests. Try Using Another Executor",
+                Image = "rbxassetid://6031075938",
+                Time = 5
+            })
+        end
+    end
+
+    local userInput = ""
+    Tab:AddTextbox({
+        Name = "Feedback",
+        Default = "",
+        TextDisappear = true,
+        Callback = function(txt)
+            userInput = txt
+        end
+    })
+
+    Tab:AddButton({
+        Name = "Send",
+        Callback = function()
+            if userInput ~= "" then
+                sendFeedback(userInput)
+            else
+                OrionLib:MakeNotification({
+                    Name = "System Hub",
+                    Content = "No Feedback To send",
+                    Image = "rbxassetid://6031075938",
+                    Time = 5
+                })
+            end
+        end
+    })
+end
