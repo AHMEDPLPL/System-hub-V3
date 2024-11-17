@@ -12,13 +12,13 @@ local OrionLib = {
 	Flags = {},
 	Themes = {
 		Default = {
-			Main = Color3.fromRGB(45, 0, 0),     -- Dark crimson red  
-Second = Color3.fromRGB(70, 0, 0),   -- Deep blood red  
-Stroke = Color3.fromRGB(100, 10, 10),  -- Dark maroon for outlines  
-Divider = Color3.fromRGB(130, 20, 20), -- Rich blood divider  
-Text = Color3.fromRGB(255, 200, 200),  -- Pale, blood-drained white  
-TextDark = Color3.fromRGB(160, 50, 50) -- Faded dark red
-		}
+    Main = Color3.fromRGB(55, 0, 0),     -- لون أحمر داكن قريب من الدم
+    Second = Color3.fromRGB(80, 0, 0),   -- لون دم أغنى وأغمق شوية
+    Stroke = Color3.fromRGB(120, 15, 15), -- لون حدود أقرب للدم الغامق
+    Divider = Color3.fromRGB(150, 25, 25), -- لون مقسم غامق جداً أقرب للدم
+    Text = Color3.fromRGB(255, 180, 180),  -- لون نص أبيض مائل للوردي الفاتح كأنه دم ممزوج
+    TextDark = Color3.fromRGB(170, 40, 40) -- لون نص داكن مائل للدم الداكن
+}
 	},
 	SelectedTheme = "Default",
 	Folder = nil,
