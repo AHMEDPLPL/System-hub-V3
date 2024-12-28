@@ -159,7 +159,7 @@ local function bringPlayer(target)
 end
 
 
-function Functions:Fling(Target)
+function Functions:Bring(Target)
     bringPlayer(Target)
 end
 return Functions
