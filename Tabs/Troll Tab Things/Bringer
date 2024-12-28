@@ -1,0 +1,165 @@
+local Functions = {}
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local AllBool = false
+
+local GetPlayer = function(Name)
+    Name = Name:lower()
+    if Name == "all" or Name == "others" then
+        AllBool = true
+        return
+    elseif Name == "random" then
+        local GetPlayers = Players:GetPlayers()
+        if table.find(GetPlayers,Player) then table.remove(GetPlayers,table.find(GetPlayers,Player)) end
+        return GetPlayers[math.random(#GetPlayers)]
+    elseif Name ~= "random" and Name ~= "all" and Name ~= "others" then
+        for _,x in next, Players:GetPlayers() do
+            if x ~= Player then
+                if x.Name:lower():match("^"..Name) then
+                    return x;
+                elseif x.DisplayName:lower():match("^"..Name) then
+                    return x;
+                end
+            end
+        end
+    else
+        return
+    end
+end
+local Players = game:FindFirstChildOfClass("Players")
+local lp = Players.LocalPlayer
+local ws = game:FindFirstChildOfClass("Workspace")
+local v3 = Vector3.new
+local v3_010 = v3(0, 1, 0)
+local v3_0 = v3(0, 0, 0)
+local cf = CFrame.new
+local angles = CFrame.Angles
+local osclock = os.clock
+local task_wait = task.wait
+
+local speeding = 32
+local maxspeed = 75
+local off = angles(-1.5707963267948966, 0, 0)
+
+local function gp(p, n, cl)
+    if typeof(p) == "Instance" then
+        local c = p:GetChildren()
+        for i = 1, #c do
+            local v = c[i]
+            if (v.Name == n) and v:IsA(cl) then
+                return v
+            end
+        end
+    end
+    return nil
+end
+
+local others = {}
+for i, v in pairs(Players:GetPlayers()) do
+    if v ~= lp then
+        others[v] = true
+    end
+end
+
+Players.PlayerAdded:Connect(function(Player)
+    others[Player] = true
+end)
+
+Players.PlayerRemoving:Connect(function(Player)
+    others[Player] = nil
+end)
+
+local function findPlayer(txt)
+    if txt == "" then
+        return nil
+    end
+    for v, _ in pairs(others) do
+        if v.DisplayName == txt or v.Name == txt then
+            return v
+        end
+    end
+    return nil
+end
+
+local bringing = false
+
+local function bringPlayer(target)
+    if not target then
+        return
+    end
+    local c = lp.Character
+    local c1 = target.Character
+    if not (c and c1) then
+        return
+    end
+    if not (c:IsDescendantOf(ws) and c1:IsDescendantOf(ws)) then
+        return
+    end
+
+    local hrp = gp(c, "HumanoidRootPart", "BasePart")
+    local hrp1 = gp(c1, "HumanoidRootPart", "BasePart")
+    if not (hrp and hrp1) then
+        return
+    end
+
+    bringing = true
+    local from = hrp1.CFrame
+    local fromP = from.Position
+    local to = hrp.CFrame
+    local toP = to.Position
+    local mag = (fromP - toP).Magnitude - 3
+    local lv = cf(fromP, toP).LookVector
+    local vel = 0
+    local pos = from.Position - v3_010 * 2
+    toP = toP - v3_010 * 2
+
+    local sine = osclock()
+    local lastsine = sine
+    local way = 0
+    local reachedmaxspeed = false
+    while bringing and c:IsDescendantOf(ws) and c1:IsDescendantOf(ws) do
+        sine = osclock()
+        local deltaTime = sine - lastsine
+        lastsine = sine
+        if reachedmaxspeed then
+            if mag - way < reachedmaxspeed then
+                vel = vel - deltaTime * speeding
+                if vel < 0 then
+                    break
+                end
+            end
+        else
+            if way > mag / 2 then
+                vel = vel - deltaTime * speeding
+                if vel < 0 then
+                    break
+                end
+            else
+                vel = vel + deltaTime * speeding
+                if vel > maxspeed then
+                    reachedmaxspeed = way
+                    vel = maxspeed
+                end
+            end
+        end
+        way = way + vel * deltaTime
+        if not hrp:IsGrounded() then
+            hrp.CFrame = cf(pos + lv * way, toP) * off
+            hrp.Velocity = lv * (vel + 1)
+            hrp.RotVelocity = v3_0
+        end
+        task_wait()
+    end
+    hrp.CFrame = to
+    hrp.Velocity = v3_0
+    hrp.RotVelocity = v3_0
+    bringing = false
+end
+
+
+function Functions:Fling(Target)
+    bringPlayer(Target)
+end
+return Functions
