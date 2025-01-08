@@ -1,0 +1,383 @@
+
+
+local Functions = {}
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RE = ReplicatedStorage:WaitForChild("RE")
+local plrtriggerevent = RE:WaitForChild("1Playe1rTrigge1rEven1t")
+local clothesevent = RE:WaitForChild("1Clothe1s")
+local toolevent = RE:WaitForChild("1Too1l")
+local localplr = game.Players.LocalPlayer
+
+
+
+local ui = game:GetService("UserInputService")
+
+local hum = localplr.Character:FindFirstChildOfClass("Humanoid")
+
+local function randomString()
+	local length = math.random(10,20)
+	local array = {}
+	for i = 1, length do
+		array[i] = string.char(math.random(32, 126))
+	end
+	return table.concat(array)
+end
+
+floatName = randomString()
+
+local function getRoot(char)
+	local rootPart = char:FindFirstChild('HumanoidRootPart') or char:FindFirstChild('Torso') or char:FindFirstChild('UpperTorso')
+	return rootPart
+end
+
+local noclip = false
+local walkonwatertoggle = false
+local invis = false
+
+spawn(function()
+	while wait() do
+		if not noclip then
+			for i, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+				if v:IsA("BasePart") then
+					v.CanCollide = true
+				end
+			end
+		else
+			for i, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+				if v:IsA("BasePart") then
+					v.CanCollide = false
+				end
+			end
+		end
+	end
+end)
+
+local function unfling()
+	for _, child in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+		if child:IsA("BasePart") then
+			child.CustomPhysicalProperties = PhysicalProperties.new(nil, nil, nil)
+		end
+	end
+	noclip = false
+	if flingDied then
+		flingDied:Disconnect()
+	end
+	wait(.1)
+	if not game.Players.LocalPlayer.Character or not getRoot(game.Players.LocalPlayer.Character) then return end
+	for i,v in pairs(getRoot(game.Players.LocalPlayer.Character):GetChildren()) do
+		if v.ClassName == 'BodyAngularVelocity' then
+			v:Destroy()
+		end
+	end
+	for _, child in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+		if child.ClassName == "Part" or child.ClassName == "MeshPart" then
+			child.CustomPhysicalProperties = PhysicalProperties.new(0.7, 0.3, 0.5)
+		end
+	end
+end
+
+function fixcam()
+	workspace.CurrentCamera.CameraSubject = game.Players.LocalPlayer.Character:FindFirstChildWhichIsA('Humanoid')
+	workspace.CurrentCamera.CameraType = "Custom"
+	game.Players.LocalPlayer.CameraMinZoomDistance = 0.5
+	game.Players.LocalPlayer.CameraMaxZoomDistance = 400
+	game.Players.LocalPlayer.CameraMode = "Classic"
+	game.Players.LocalPlayer.Character.Head.Anchored = false
+end
+
+local bringing = false
+
+local function bringdaplr(plrselected)
+
+	if bringing then
+		return
+	end
+
+	local continuekill = false
+	local killreal
+	local couch
+	local couchseat1
+	local couchseat2
+
+	toolevent:InvokeServer("PickingTools", "Couch")
+	
+	if not localplr.Backpack:FindFirstChild("Couch") and not localplr.Character:FindFirstChild("Couch") then
+		toolevent:InvokeServer("PickingTools", "Couch")
+	end
+	
+	bringing = true
+
+	local part = Instance.new("Part")
+	part.Anchored = true
+	part.CanCollide = false
+	part.Transparency = 1
+	part.Parent = game.Workspace
+	part.CFrame = localplr.Character.PrimaryPart.CFrame
+
+	killreal = game["Run Service"].RenderStepped:Connect(function()
+		if bringing then
+			localplr.Character.PrimaryPart.CFrame = plrselected.Character.PrimaryPart.CFrame * CFrame.new(0, -3.45, 0)
+			if not localplr.Backpack:FindFirstChild("Couch") and not localplr.Character:FindFirstChild("Couch") then
+				toolevent:InvokeServer("PickingTools", "Couch")
+			end
+			if localplr.Backpack:FindFirstChild("Couch") then
+				local couch = localplr.Backpack:FindFirstChild("Couch")
+				couch.Parent = localplr.Character
+				couch = localplr.Character:WaitForChild("Couch")
+				if couchseat1 then
+					couchseat1:Disconnect()
+				end
+				if couchseat2 then
+					couchseat2:Disconnect()
+				end
+				couchseat1 = couch.Seat1.ChildAdded:Connect(function(child)
+					if child:IsA("Weld") then
+						local satplr = child.Part1.Parent
+						if satplr then
+							print(satplr.Name)
+							if game.Players:GetPlayerFromCharacter(satplr) then
+								satplr = game.Players:GetPlayerFromCharacter(satplr)
+								if satplr.Name == plrselected.Name then
+									continuekill = true
+								end
+							end
+						end
+					end
+				end)
+
+				couchseat2 = couch.Seat2.ChildAdded:Connect(function(child)
+					if child:IsA("Weld") then
+						local satplr = child.Part1.Parent
+						if satplr then
+							print(satplr.Name)
+							if game.Players:GetPlayerFromCharacter(satplr) then
+								satplr = game.Players:GetPlayerFromCharacter(satplr)
+								if satplr.Name == plrselected.Name then
+									continuekill = true
+								end
+							end
+						end
+					end
+				end)
+			end
+		end
+	end)
+
+	couch = localplr.Character:WaitForChild("Couch")
+
+	couchseat1 = couch.Seat1.ChildAdded:Connect(function(child)
+		if child:IsA("Weld") then
+			local satplr = child.Part1.Parent
+			if satplr then
+				print(satplr.Name)
+				if game.Players:GetPlayerFromCharacter(satplr) then
+					satplr = game.Players:GetPlayerFromCharacter(satplr)
+					if satplr.Name == plrselected.Name then
+						continuekill = true
+					end
+				end
+			end
+		end
+	end)
+
+	couchseat2 = couch.Seat2.ChildAdded:Connect(function(child)
+		if child:IsA("Weld") then
+			local satplr = child.Part1.Parent
+			if satplr then
+				print(satplr.Name)
+				if game.Players:GetPlayerFromCharacter(satplr) then
+					satplr = game.Players:GetPlayerFromCharacter(satplr)
+					if satplr.Name == plrselected.Name then
+						continuekill = true
+					end
+				end
+			end
+		end
+	end)
+
+	local humdied
+
+	humdied = localplr.Character:FindFirstChildOfClass("Humanoid").Died:Connect(function()
+		continuekill = true
+	end)
+
+	repeat
+		wait()
+	until continuekill or not bringing
+
+	humdied:Disconnect()
+	killreal:Disconnect()
+	couchseat1:Disconnect()
+	couchseat2:Disconnect()
+
+	localplr.Character.PrimaryPart.CFrame = part.CFrame
+	
+	task.wait(1)
+	
+	bringing = false
+
+	part:Destroy()
+
+end
+
+local killing = false
+
+local function killdaplr(plrselected)
+
+	if killing then
+		return
+	end
+
+	toolevent:InvokeServer("PickingTools", "Couch")
+	
+	if not localplr.Backpack:FindFirstChild("Couch") and not localplr.Character:FindFirstChild("Couch") then
+		toolevent:InvokeServer("PickingTools", "Couch")
+	end
+
+	killing = true
+	local continuekill = false
+	local checkdelay = false
+	local killreal
+	local oldchar = localplr.Character
+	local couch
+
+	local part = Instance.new("Part")
+	part.Anchored = true
+	part.CanCollide = false
+	part.Transparency = 1
+	part.Parent = game.Workspace
+	part.CFrame = localplr.Character.PrimaryPart.CFrame
+	
+	local couchseat1
+	local couchseat2
+
+	killreal = game["Run Service"].RenderStepped:Connect(function()
+		if killing then
+			localplr.Character.PrimaryPart.CFrame = plrselected.Character.PrimaryPart.CFrame * CFrame.new(0, -3.45, 0)
+			if not localplr.Backpack:FindFirstChild("Couch") and not localplr.Character:FindFirstChild("Couch") then
+				toolevent:InvokeServer("PickingTools", "Couch")
+			end
+			if localplr.Backpack:FindFirstChild("Couch") then
+				local couch = localplr.Backpack:FindFirstChild("Couch")
+				couch.Parent = localplr.Character
+				couch = localplr.Character:WaitForChild("Couch")
+				if couchseat1 then
+					couchseat1:Disconnect()
+				end
+				if couchseat2 then
+					couchseat2:Disconnect()
+				end
+				couchseat1 = couch.Seat1.ChildAdded:Connect(function(child)
+					if child:IsA("Weld") then
+						local satplr = child.Part1.Parent
+						if satplr then
+							print(satplr.Name)
+							if game.Players:GetPlayerFromCharacter(satplr) then
+								satplr = game.Players:GetPlayerFromCharacter(satplr)
+								if satplr.Name == plrselected.Name then
+									continuekill = true
+								end
+							end
+						end
+					end
+				end)
+
+				couchseat2 = couch.Seat2.ChildAdded:Connect(function(child)
+					if child:IsA("Weld") then
+						local satplr = child.Part1.Parent
+						if satplr then
+							print(satplr.Name)
+							if game.Players:GetPlayerFromCharacter(satplr) then
+								satplr = game.Players:GetPlayerFromCharacter(satplr)
+								if satplr.Name == plrselected.Name then
+									continuekill = true
+								end
+							end
+						end
+					end
+				end)
+			end
+		end
+	end)
+
+	couch = localplr.Character:WaitForChild("Couch")
+
+	couchseat1 = couch.Seat1.ChildAdded:Connect(function(child)
+		if child:IsA("Weld") then
+			local satplr = child.Part1.Parent
+			if satplr then
+				print(satplr.Name)
+				if game.Players:GetPlayerFromCharacter(satplr) then
+					satplr = game.Players:GetPlayerFromCharacter(satplr)
+					if satplr.Name == plrselected.Name then
+						continuekill = true
+					end
+				end
+			end
+		end
+	end)
+
+	couchseat2 = couch.Seat2.ChildAdded:Connect(function(child)
+		if child:IsA("Weld") then
+			local satplr = child.Part1.Parent
+			if satplr then
+				print(satplr.Name)
+				if game.Players:GetPlayerFromCharacter(satplr) then
+					satplr = game.Players:GetPlayerFromCharacter(satplr)
+					if satplr.Name == plrselected.Name then
+						continuekill = true
+					end
+				end
+			end
+		end
+	end)
+
+	local humdied
+
+	humdied = localplr.Character:FindFirstChildOfClass("Humanoid").Died:Connect(function()
+		continuekill = true
+	end)
+
+	repeat
+		wait()
+	until continuekill or not killing
+
+	humdied:Disconnect()
+	killreal:Disconnect()
+	couchseat1:Disconnect()
+	couchseat2:Disconnect()
+
+	localplr.Character.PrimaryPart.CFrame = CFrame.new(-200, -300, -200)
+
+	repeat
+		wait()
+	until localplr.Character:FindFirstChildOfClass("Humanoid") and localplr.Character ~= oldchar
+
+	spawn(function()
+		repeat
+			toolevent:InvokeServer("PickingTools", "Couch")
+		until not localplr.Backpack:FindFirstChild("Couch") and not localplr.Character:FindFirstChild("Couch")
+	end)
+
+	localplr.Character.PrimaryPart.CFrame = part.CFrame
+	
+	task.wait(1)
+	
+	killing = false
+	
+	part:Destroy()
+	
+end
+
+
+function Functions:Bring(Target)
+    bringdaplr(Target)
+end
+
+function Functions:Kill(Target)
+    killdaplr(Target)
+end
+
+return Functions
+
