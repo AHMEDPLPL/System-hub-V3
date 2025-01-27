@@ -344,8 +344,8 @@ local function killdaplr(plrselected)
 	end)
 
 	repeat
-		wait()
-	until continuekill or not killing tick() > Time + TimeToWait
+    wait()
+until continuekill or not killing or tick() > Time + TimeToWait
 
 	humdied:Disconnect()
 	killreal:Disconnect()
