@@ -9,6 +9,10 @@ local clothesevent = RE:WaitForChild("1Clothe1s")
 local toolevent = RE:WaitForChild("1Too1l")
 local localplr = game.Players.LocalPlayer
 
+            local TimeToWait = 2
+            local Time = tick()
+            local Angle = 0
+
 
 
 local ui = game:GetService("UserInputService")
@@ -204,7 +208,7 @@ local function bringdaplr(plrselected)
 
 	repeat
 		wait()
-	until continuekill or not bringing
+	until continuekill or not bringing or tick() > Time + TimeToWait
 
 	humdied:Disconnect()
 	killreal:Disconnect()
@@ -341,7 +345,7 @@ local function killdaplr(plrselected)
 
 	repeat
 		wait()
-	until continuekill or not killing
+	until continuekill or not killing tick() > Time + TimeToWait
 
 	humdied:Disconnect()
 	killreal:Disconnect()
