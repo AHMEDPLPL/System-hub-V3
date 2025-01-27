@@ -9,7 +9,7 @@ local clothesevent = RE:WaitForChild("1Clothe1s")
 local toolevent = RE:WaitForChild("1Too1l")
 local localplr = game.Players.LocalPlayer
 
-            local TimeToWait = 5
+            local TimeToWait = 10
             local Time = tick()
             local Angle = 0
 
