@@ -50,9 +50,9 @@ COREGUI = cloneref(game:GetService("CoreGui"))
 
 local Orion = Instance.new("ScreenGui")
 Orion.Name = "Orio"
-Orion.Parent = get_hidden_gui or gethui or or COREGUI
+Orion.Parent = get_hidden_gui or gethui or COREGUI
 
-if get_hidden_gui or gethui or or COREGUI then
+if get_hidden_gui or gethui or COREGUI then
     for _, Interface in ipairs(gethui():GetChildren()) do
         if Interface.Name == Orion.Name and Interface ~= Orion then
             Interface:Destroy()
@@ -659,7 +659,7 @@ local function MakeShowGui()
     if not ScreenGui then
         ScreenGui = Instance.new("ScreenGui")
         ScreenGui.Name = "AGJ"
-        ScreenGui.Parent = get_hidden_gui or gethui or or COREGUI
+        ScreenGui.Parent = get_hidden_gui or gethui or COREGUI
         ScreenGui.ResetOnSpawn = false
         ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling 
 
