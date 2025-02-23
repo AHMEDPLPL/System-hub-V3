@@ -1,4 +1,4 @@
-
+ 
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
@@ -45,11 +45,14 @@ local function GetIcon(IconName)
 	end
 end   
 
+local cloneref = cloneref or function(o) return o end
+COREGUI = cloneref(game:GetService("CoreGui"))
+
 local Orion = Instance.new("ScreenGui")
 Orion.Name = "Orio"
-Orion.Parent = gethui() or game.CoreGui
+Orion.Parent = get_hidden_gui or gethui or or COREGUI
 
-if gethui then
+if get_hidden_gui or gethui or or COREGUI then
     for _, Interface in ipairs(gethui():GetChildren()) do
         if Interface.Name == Orion.Name and Interface ~= Orion then
             Interface:Destroy()
@@ -655,8 +658,8 @@ local ScreenGui
 local function MakeShowGui()
     if not ScreenGui then
         ScreenGui = Instance.new("ScreenGui")
-        ScreenGui.Name = "SystemHubV3ToggleGui"
-        ScreenGui.Parent = game.CoreGui
+        ScreenGui.Name = "AGJ"
+        ScreenGui.Parent = get_hidden_gui or gethui or or COREGUI
         ScreenGui.ResetOnSpawn = false
         ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling 
 
