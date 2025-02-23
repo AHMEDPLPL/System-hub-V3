@@ -704,12 +704,6 @@ end
 	AddConnection(CloseBtn.MouseButton1Up, function()
 pcall(function() getgenv().System_Hub = false end)
 		Orion:Destroy()
-
-
-local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
-if OldGui then
-	OldGui:Destroy()
-end
 	end)
 
 
