@@ -83,36 +83,18 @@ local Orion = Instance.new("ScreenGui")
 Orion.Name = randomString()
 Orion.Parent = PARENT
 
-function OrionLib:IsRunning()
-	if gethui then
-		return Orion.Parent == PARENT
-	else
-		return Orion.Parent == PARENT
-	end
+wait(10)
 
-end
 
 -- Function to delete an Orion GUI if another Orion exists
 
 
 local function AddConnection(Signal, Function)
-	if (not OrionLib:IsRunning()) then
-		return
-	end
 	local SignalConnect = Signal:Connect(Function)
 	table.insert(OrionLib.Connections, SignalConnect)
 	return SignalConnect
 end
 
-task.spawn(function()
-	while (OrionLib:IsRunning()) do
-		wait()
-	end
-
-	for _, Connection in next, OrionLib.Connections do
-		Connection:Disconnect()
-	end
-end)
 
 local function MakeDraggable(DragPoint, Main)
 	pcall(function()
