@@ -28,12 +28,11 @@ local OrionLib = {
 
 --Feather Icons https://github.com/evoincorp/lucideblox/tree/master/src/modules/util - Created by 7kayoh
 
-local cloneref = cloneref or function(o) return o end
-COREGUI = cloneref(game:GetService("CoreGui"))
+COREGUI = game.CoreGui
 
 local Orion = Instance.new("ScreenGui")
 Orion.Name = "Orio"
-Orion.Parent = get_hidden_gui or gethui or COREGUI
+Orion.Parent = get_hidden_gui or gethui or game.CoreGui
 
 if get_hidden_gui or gethui or COREGUI then
     for _, Interface in ipairs(gethui():GetChildren()) do
