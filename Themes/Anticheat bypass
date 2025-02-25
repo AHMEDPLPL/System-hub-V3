@@ -638,6 +638,8 @@ AddConnection(UserInputService.InputBegan, function(Input)
 	end)
 end
 
+wait(10)
+
 	AddConnection(CloseBtn.MouseButton1Up, function()
 pcall(function() getgenv().System_Hub = false end)
 		Orion:Destroy()
