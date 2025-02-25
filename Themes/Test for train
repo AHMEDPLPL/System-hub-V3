@@ -403,6 +403,8 @@ function OrionLib:Init()
 	end	
 end	
 
+wait(10)
+
 function OrionLib:MakeWindow(WindowConfig)
 	local FirstTab = true
 	local Minimized = false
@@ -583,6 +585,9 @@ function OrionLib:MakeWindow(WindowConfig)
 		})
 		WindowIcon.Parent = MainWindow.TopBar
 	end	
+
+
+wait(10)
 
 	MakeDraggable(DragPoint, MainWindow)
 local IsOnMobile = table.find({
