@@ -1,4 +1,4 @@
-
+ 
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
@@ -671,7 +671,7 @@ local function MakeShowGui()
         Toggle.BackgroundColor3 = Color3.fromRGB(0, 0, 0) 
         Toggle.Position = UDim2.new(0, 170, 0, 40) 
         Toggle.Size = UDim2.new(0, 50, 0, 50) 
-        Toggle.Text = "" 
+        Toggle.Text = "SH" 
         Toggle.Draggable = true
         Toggle.Visible = true
 
