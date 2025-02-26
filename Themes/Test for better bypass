@@ -92,8 +92,6 @@ function OrionLib:IsRunning()
 en
 
 -- Function to delete an Orion GUI if another Orion exists
-d
-
 local function AddConnection(Signal, Function)
 	if (not OrionLib:IsRunning()) then
 		return
