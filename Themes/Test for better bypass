@@ -1,12 +1,10 @@
- 
+
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 local HttpService = game:GetService("HttpService")
-local cloneref = cloneref or function(o) return o end
-COREGUI = cloneref(game:GetService("CoreGui"))
 
 local OrionLib = {
 	Elements = {},
@@ -28,7 +26,6 @@ local OrionLib = {
 	SaveCfg = false
 }
 
---Feather Icons https://github.com/evoincorp/lucideblox/tree/master/src/modules/util - Created by 7kayoh
 local Icons = {}
 
 local function GetIcon(IconName)
@@ -38,8 +35,6 @@ local function GetIcon(IconName)
 		return nil
 	end
 end   
-
-
 
 local Orion = Instance.new("ScreenGui")
 Orion.Name = "Orio"
@@ -54,14 +49,11 @@ if gethui then
     for _, Interface in ipairs(gethui():GetChildren()) do
         if Interface.Name == Orion.Name and Interface ~= Orion then
             Interface:Destroy()
-            
-            -- Destroy SystemHubV3TitleGui if it exists
-            
 
-            -- Destroy SystemHubV3ToggleGui if it exists
-            local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
-            if OldGui then
-                OldGui:Destroy()
+            for _, interface in ipairs(gethui():GetChildren()) do
+                if interface:IsA("ScreenGui") and interface.Name == "SystemHubGui" then
+                    interface:Destroy()
+                end
             end
         end
     end
@@ -70,13 +62,10 @@ else
         if Interface.Name == Orion.Name and Interface ~= Orion then
             Interface:Destroy()
 
-            -- Destroy SystemHubV3TitleGui if it exists
-            
-
-            -- Destroy SystemHubV3ToggleGui if it exists
-            local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
-            if OldGui then
-                OldGui:Destroy()
+            for _, interface in ipairs(game.CoreGui:GetChildren()) do
+                if interface:IsA("ScreenGui") and interface.Name == "SystemHubGui" then
+                    interface:Destroy()
+                end
             end
         end
     end
@@ -88,10 +77,9 @@ function OrionLib:IsRunning()
 	else
 		return Orion.Parent == game:GetService("CoreGui")
 	end
-	
-en
 
--- Function to delete an Orion GUI if another Orion exists
+end
+
 local function AddConnection(Signal, Function)
 	if (not OrionLib:IsRunning()) then
 		return
@@ -672,8 +660,8 @@ local ScreenGui
 local function MakeShowGui()
     if not ScreenGui then
         ScreenGui = Instance.new("ScreenGui")
-        ScreenGui.Name = "SystemHubV3ToggleGui"
-        ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+        ScreenGui.Name = "SystemHubGui"
+        ScreenGui.Parent = gethui() or game.CoreGui
         ScreenGui.ResetOnSpawn = false
         ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling 
 
@@ -719,15 +707,23 @@ AddConnection(UserInputService.InputBegan, function(Input)
 end
 
 	AddConnection(CloseBtn.MouseButton1Up, function()
-pcall(function() getgenv().System_Hub = false end)
-		Orion:Destroy()
+    pcall(function() getgenv().System_Hub = false end)
+    Orion:Destroy()
 
-
-local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
-if OldGui then
-	OldGui:Destroy()
-end
-	end)
+    if gethui then
+        for _, interface in ipairs(gethui():GetChildren()) do
+            if interface:IsA("ScreenGui") and interface.Name == "SystemHubGui" then
+                interface:Destroy()
+            end
+        end
+    else
+        for _, interface in ipairs(game.CoreGui:GetChildren()) do
+            if interface:IsA("ScreenGui") and interface.Name == "SystemHubGui" then
+                interface:Destroy()
+            end
+        end
+    end
+end)
 
 
 	AddConnection(MinimizeBtn.MouseButton1Up, function()
@@ -1827,15 +1823,20 @@ end
 
 function OrionLib:Destroy()
 	Orion:Destroy()
-local oldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3TitleGui")
-if oldGui then
-	oldGui:Destroy()
-end
-
-local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
-if OldGui then
-	OldGui:Destroy()
-end
+    pcall(function() getgenv().System_Hub = false end)
+    if gethui then
+        for _, interface in ipairs(gethui():GetChildren()) do
+            if interface:IsA("ScreenGui") and interface.Name == "SystemHubGui" then
+                interface:Destroy()
+            end
+        end
+    else
+        for _, interface in ipairs(game.CoreGui:GetChildren()) do
+            if interface:IsA("ScreenGui") and interface.Name == "SystemHubGui" then
+                interface:Destroy()
+            end
+        end
+    end
 end
 
 return OrionLib
