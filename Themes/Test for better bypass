@@ -1,4 +1,4 @@
-
+ 
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
@@ -39,27 +39,7 @@ local function GetIcon(IconName)
 	end
 end   
 
-PARENT = nil
-if get_hidden_gui or gethui then
-	local hiddenUI = get_hidden_gui or gethui
-	local Orion = Instance.new("ScreenGui")
-	Orion.Name = "Orio"
-	Orion.Parent = hiddenUI()
-	PARENT = Orion
-elseif (not is_sirhurt_closure) and (syn and syn.protect_gui) then
-	local Orion = Instance.new("ScreenGui")
-	Orion.Name = "Orio"
-	syn.protect_gui(Orion)
-	Orion.Parent = COREGUI
-	PARENT = Orion
-elseif COREGUI:FindFirstChild('RobloxGui') then
-	PARENT = COREGUI.RobloxGui
-else
-	local Orion = Instance.new("ScreenGui")
-	Orion.Name = "Orio"
-	Orion.Parent = COREGUI
-	PARENT = Orion
-end
+
 
 local Orion = Instance.new("ScreenGui")
 Orion.Name = "Orio"
@@ -71,9 +51,14 @@ else
 end
 
 if gethui then
-    for _, Interface in ipairs(PARENT:GetChildren()) do
+    for _, Interface in ipairs(gethui():GetChildren()) do
         if Interface.Name == Orion.Name and Interface ~= Orion then
             Interface:Destroy()
+            
+            -- Destroy SystemHubV3TitleGui if it exists
+            
+
+            -- Destroy SystemHubV3ToggleGui if it exists
             local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
             if OldGui then
                 OldGui:Destroy()
@@ -81,9 +66,14 @@ if gethui then
         end
     end
 else
-    for _, Interface in ipairs(PARENT:GetChildren()) do
+    for _, Interface in ipairs(game.CoreGui:GetChildren()) do
         if Interface.Name == Orion.Name and Interface ~= Orion then
             Interface:Destroy()
+
+            -- Destroy SystemHubV3TitleGui if it exists
+            
+
+            -- Destroy SystemHubV3ToggleGui if it exists
             local OldGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SystemHubV3ToggleGui")
             if OldGui then
                 OldGui:Destroy()
@@ -94,11 +84,15 @@ end
 
 function OrionLib:IsRunning()
 	if gethui then
-		return Orion.Parent == PARENT
+		return Orion.Parent == gethui()
 	else
-		return Orion.Parent == PARENT
+		return Orion.Parent == game:GetService("CoreGui")
 	end
-end
+	
+en
+
+-- Function to delete an Orion GUI if another Orion exists
+d
 
 local function AddConnection(Signal, Function)
 	if (not OrionLib:IsRunning()) then
@@ -623,7 +617,7 @@ function OrionLib:MakeWindow(WindowConfig)
 	}), "Stroke")
 
 	local MainWindow = AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.fromRGB(255, 255, 255), 0, 10), {
-		Parent = Orio,
+		Parent = Orion,
 		Position = UDim2.new(0.5, -307, 0.5, -172),
 		Size = UDim2.new(0, 615, 0, 344),
 		ClipsDescendants = true
