@@ -660,32 +660,41 @@ local ScreenGui
 local function MakeShowGui()
     if not ScreenGui then
         ScreenGui = Instance.new("ScreenGui")
-        ScreenGui.Name = "SystemHubGui"
-        ScreenGui.Parent = gethui() or game.CoreGui
-        ScreenGui.ResetOnSpawn = false
-        ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling 
+ScreenGui.Name = "SystemHubGui"
+ScreenGui.Parent = gethui() or game.CoreGui
+ScreenGui.ResetOnSpawn = false
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
-        local Toggle = Instance.new("TextButton")
-        Toggle.Name = "Toggle"
-        Toggle.Parent = ScreenGui
-        Toggle.BackgroundColor3 = Color3.fromRGB(0, 0, 0) 
-        Toggle.Position = UDim2.new(0, 170, 0, 40) 
-        Toggle.Size = UDim2.new(0, 50, 0, 50) 
-        Toggle.Text = "SH"
-        Toggle.TextColor3 = Color3.fromRGB(0, 0, 255) 
-        Toggle.TextSize = 30  
-        Toggle.Draggable = true
-        Toggle.Visible = true
+local Toggle = Instance.new("TextButton")
+Toggle.Name = "Toggle"
+Toggle.Parent = ScreenGui
+Toggle.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Toggle.Position = UDim2.new(0, 170, 0, 40)
+Toggle.Size = UDim2.new(0, 60, 0, 60)
 
-        local Corner1 = Instance.new("UICorner")
-        Corner1.CornerRadius = UDim.new(0, 3)
-        Corner1.Parent = Toggle
+Toggle.Draggable = true
+Toggle.Visible = true
 
-        Toggle.MouseButton1Click:Connect(function()
-            if MainWindow then
+local Corner1 = Instance.new("UICorner")
+Corner1.CornerRadius = UDim.new(0, 3)
+Corner1.Parent = Toggle
+
+local Image = Instance.new("ImageLabel")
+Image.Name = "Image"
+Image.Parent = Toggle
+Image.Size = UDim2.new(1, 0, 1, 0)
+Image.BackgroundTransparency = 1
+Image.Image = "rbxassetid://74132088634336"
+
+local Corner1 = Instance.new("UICorner")
+Corner1.CornerRadius = UDim.new(0, 3)
+Corner1.Parent = Image
+
+Toggle.MouseButton1Click:Connect(function()
+ if MainWindow then
                 MainWindow.Visible = not MainWindow.Visible 
             end
-        end)
+end)
     end
 end
 
