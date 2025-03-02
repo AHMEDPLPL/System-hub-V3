@@ -1,1 +1,76 @@
 
+function Chat(msg)
+    if game:GetService("TextChatService").ChatVersion == Enum.ChatVersion.TextChatService then
+        game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync(msg)
+    else
+        game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg, "All")
+    end
+end
+
+Rizz_Lines =  {
+	"Are you French? Because Eiffel for you.", -- 1
+	"Do you believe in love at first sight, or should I walk by again?", -- 2 
+	"Is your name Google? Because you have everything I’ve been searching for.", -- 3
+	"Are you WiFi? Because I'm really feeling a connection.", -- 4
+	"Are you made of copper and tellurium? Because you're Cu-Te.", -- 5
+	"If beauty were time, you’d be an eternity.", -- 6
+	"Are you an angel? Because heaven is missing one.", -- 7
+	"Is your name Chapstick? Because you’re da balm!", -- 8
+	"Can you lend me a kiss? I promise I’ll give it back.", -- 9
+	"Are you a dictionary? Because you add meaning to my life.", -- 10
+	"Are you a time traveler? Because I see you in my future.", -- 11
+	"If you were a vegetable, you’d be a cutecumber!", -- 12
+	"Someone should call the police because you just stole my heart!", -- 13
+	"If you were words on a page, you'd be fine print.", -- 14
+	"Are you an artist? Because every time I look at you, I see a masterpiece.", -- 15
+	"Is your name Coca-Cola? Because you’re so-da-licious!", -- 16
+	"Are you on fire? Because you’re smoking hot!", -- 17
+	"Are you Siri? Because you autocomplete me.", -- 18
+	"Are you a volcano? Coz I lava you!", -- 19
+	"Are you a camera? Because every time I look at you, I smile.", -- 20 
+	"Thank god I have life insurance. Because you make my heart stop.", -- 21
+	"You’re so beautiful that you made me forget my pick-up line.", -- 22
+	"Are you a bank loan? Because you have my interest!", -- 23
+	"Life without you is like a broken pencil. Pointless.", -- 24
+	"I know we’re not socks, but we make a great pair.", -- 25
+	"If I could rearrange the alphabet, I’d put ‘U’ and ‘I’ together.", -- 26
+	"Are you from Tennessee? Because you’re the only 10 I see!", -- 27
+	"I’m no photographer, but I can picture us together.", -- 28
+	"Are you a magician? When I look at you everything disappears.", -- 29
+	"Hey, tie your shoes! I don’t want you falling for anyone else.", -- 30
+	"Roses are red. Violets are blue. I didn’t know what perfect was until I met you.", -- 31
+	"I’d rate you a nine because the only thing missing is me.", -- 32
+	"Do you have a name, or can I call you mine?", -- 33
+	"Do you have an inhaler? You took my breath away.", -- 34
+	"Are you a star? Because your light brightens up my life.", -- 35
+	"Are you a firework? Because I can light you up!", -- 36
+	"Are you the ocean? Because I’m lost at sea.", -- 37
+	"Are you a sunrise? Because you brighten up my darkest days.", -- 38
+	"Are you a parking ticket? Because you got 'fine' written all over you.", -- 39
+	"Are you a cloud? Because I’m on cloud nine when I’m with you.", -- 40
+	"Are you my homework? Because I can’t stop thinking about you.", -- 41
+	"Are you a shooting star? Because I wished for someone like you.", -- 42
+	"Are you a diamond? Because you're flawless.", -- 43
+	"Are you a mirror? Because I see my future with you.", -- 44
+	"Are you a lock? Because you just unlocked my heart.", -- 45
+	"Are you gravity? Because you keep pulling me in.", -- 46
+	"Are you a melody? Because you make my heart sing.", -- 47
+	"Are you chocolate? Because you make life sweeter.", -- 48
+	"Are you a puzzle? Because you’re the missing piece in my life.", -- 49
+	"Are you the sun? Because you light up my world.", -- 50
+}
+
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/mikhailramlal/Rizzer/main/ui"))()
+
+local Rizz_Main = lib:Window("Rizzer")
+
+Rizz_Main:Label("Main")
+
+Rizz_Main:Dropdown("Line Picker", Rizz_Lines, function(line)
+    getgenv().line2 = tostring(line)
+end, true)
+
+
+Rizz_Main:Button("Rizz" , function() 
+    Chat(getgenv().line2)
+end) 
