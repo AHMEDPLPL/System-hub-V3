@@ -1,6 +1,4 @@
 -- you will only get banned from the hub when you spawn feedback
 return {
-    ["AAAAAAA01186"] = true,
-    ["BadPlayer"] = true,
-    ["Exploiter123"] = true
+    [""] = true
 }
