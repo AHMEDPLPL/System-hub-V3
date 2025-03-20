@@ -4,7 +4,6 @@ local LocalPlayer = Players.LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 
 -- تأكد أن Orion GUI موجود
-local Orion = game.CoreGui:FindFirstChild("Orio") or game:GetService("PlayerGui"):FindFirstChild("Orio")
 
 if Orion then
     print("[✅] Orion GUI موجود. Parent:", Orion.Parent)
