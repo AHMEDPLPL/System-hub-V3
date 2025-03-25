@@ -36,7 +36,19 @@ https://www.roblox.com/catalog/17163407577/Glitching-Red-Torso
 https://www.roblox.com/catalog/16297156693/Transparent-Inverted-Black-Torso
 ]]
 
-local reanimation = loadstring(game:HttpGet("https://gist.githubusercontent.com/pepfre12/a6804484c857aaa92a673d0db68d4ec8/raw/6efa0f57bfd6ab503d99ee8cc26e30c804446009/oblopa"))()
+
+local Global = getgenv and getgenv() or _G
+Global.PremadeathEnabled = true
+Global.FlingEnabled = false
+
+local cf=CFrame.new
+local cf_0=cf()
+local angles=CFrame.Angles
+local rad=math.rad
+
+local cfMul = function(a, b) return a * b end
+
+local reanimation = loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Tests/Test%2021"))()
 local FDless = reanimation.start({
 revokeownerships=true,
 simulationradius={
@@ -44,40 +56,86 @@ enabled=true,
 value=9e9
 },
 accessorylimbs={
+	{meshid="11601535857",textureid="",C0=angles(0,3.141592653589793,0),Name="Head"},
 
-{meshid="11263221350",textureid="11263219250",C0=CFrame.Angles(1.5707963267948966,0,1.5707963267948966),Name="Left Arm"},
-{meshid="11159370334",textureid="11159284657",C0=CFrame.Angles(-1.5707963267948966,0,1.5707963267948966),Name="Right Arm"},
+	-- patchma gear arms
+	{meshid="13831073174",textureid="",C0=cfMul(cf(0.017,0,-0.23),angles(-1.4835298641951802,-0.15707963267948966,2.199114857512855)),Name="Left Arm"},
+	{meshid="13839903766",textureid="",C0=cfMul(cf(0,-0.62,-0.01),angles(1.6580627893946132,0.15707963267948966,-2.199114857512855)),Name="Right Arm"},
 
-{meshid="14255522247",textureid="",C0=CFrame.Angles(1.5707963267948966,0,1.5707963267948966),Name="Left Arm"},
-{meshid="14255522247",textureid="",C0=CFrame.Angles(-1.5707963267948966,0,1.5707963267948966),Name="Right Arm"},
+	-- patchma yellow leg
+	{meshid="11159370334",textureid="11159285454",C0=angles(1.5707963267948966,0,1.5707963267948966),Name="Left Leg"},
 
-{meshid="12344207333",textureid="",C0=CFrame.Angles(2,0,0),Name="Left Arm"},
-{meshid="12344206657",textureid="",C0=CFrame.Angles(2,0,0),Name="Right Arm"},
+	-- patchma lego piece leg
+	{meshid="12652772399",textureid="12652775021",C0=cf(0,-0.125,0),Name="Right Leg"},
 
-{meshid="13831073174",textureid="",C0=CFrame.new(0.017,0,-0.23),CFrame.Angles(-1.4835298641951802,-0.15707963267948966,2.199114857512855),Name="Left Arm"},
-{meshid="13839903766",textureid="",C0=CFrame.new(0,-0.62,-0.01),CFrame.Angles(1.6580627893946132,0.15707963267948966,-2.199114857512855),Name="Right Arm"},
+	-- offsale white rig
+	-- a ton of offsaled black torso's
+	{meshid="14768666349",textureid="",C0=cf_0,Name="Torso"},
+	{meshid="14241018198",textureid="",C0=cf_0,Name="Torso"},
+	{meshid="13421774668",textureid="",C0=cf_0,Name="Torso"},
+	{meshid="14255522247",textureid="",C0=angles(1.5707963267948966,0,1.5707963267948966),Name="Left Leg"},
+	{meshid="14255522247",textureid="",C0=angles(-1.5707963267948966,0,1.5707963267948966),Name="Right Leg"},
+	{meshid="14768684979",textureid="",C0=angles(0,0,1.5707963267948966),Name="Left Arm"},
+	{meshid="14768684979",textureid="",C0=angles(0,0,1.5707963267948966),Name="Right Arm"},
 
-{meshid="11159370334",textureid="11159285454",C0=CFrame.Angles(1.5707963267948966,0,1.5707963267948966),Name="Left Leg"},
-{meshid="12652772399",textureid="12652775021",C0=CFrame.new(0,-0.125,0),Name="Right Leg"},
+	-- og fur body, r15 arms, smiley legs rig
+	{meshid="13953154391",textureid="",C0=cf_0,Name="Head"},
+	{meshid="13778226115",textureid="",C0=cf_0,Name="Torso"},
+	{meshid="11159370334",textureid="11159284657",C0=angles(1.5707963267948966,0,1.5707963267948966),Name="Left Leg"},
+	{meshid="11263221350",textureid="11263219250",C0=angles(-1.5707963267948966,0,1.5707963267948966),Name="Right Leg"},
+	{meshid="12344207333",textureid="",C0=angles(2,0,0),Name="Left Arm"},
+	{meshid="12344206657",textureid="",C0=angles(2,0,0),Name="Right Arm"},
 
-{meshid="14768684979",textureid="",C0=CFrame.Angles(0,0,1.5707963267948966),Name="Left Leg"},
-{meshid="14768684979",textureid="",C0=CFrame.Angles(0,0,1.5707963267948966),Name="Right Leg"},
+	-- torso for both "white limbs black torso rig" and "black rig"
+	{meshid="110684113028749",textureid="",C0=cf_0,Name="Torso"},
+	-- white limbs black torso rig
+	{meshid="13058343355",textureid="",C0=angles(0,3.141592653589793,0),Name="Head"},
+	{meshid="139733645770094",textureid="",C0=angles(0,0,1.5707963267948966),Name="Left Leg"},
+	{meshid="99608462237958",textureid="",C0=angles(0,0,1.5707963267948966),Name="Right Leg"},
+	{meshid="90736849096372",textureid="",C0=angles(0,0,1.5707963267948966),Name="Left Arm"},
+	{meshid="105141400603933",textureid="",C0=angles(0,0,1.5707963267948966),Name="Right Arm"},
+	-- head for black rigs
+	{meshid="13953153289",textureid="",C0=cf_0,Name="Head"},
+	-- offsale black rig
+	{meshid="17387586286",textureid="",C0=angles(1.5707963267948966,0,1.5707963267948966),Name="Left Leg"},
+	{meshid="17387586286",textureid="",C0=angles(-1.5707963267948966,0,1.5707963267948966),Name="Right Leg"},
+	{meshid="17374767929",textureid="",C0=angles(1.5707963267948966,0,1.5707963267948966),Name="Left Arm"},
+	{meshid="17374767929",textureid="",C0=angles(-1.5707963267948966,0,1.5707963267948966),Name="Right Arm"},
+	-- onsale black rig
+	{meshid="125405780718494",textureid="",C0=angles(1.5707963267948966,0,1.5707963267948966),Name="Left Leg"},
+	{meshid="125405780718494",textureid="",C0=angles(-1.5707963267948966,0,1.5707963267948966),Name="Right Leg"},
+	{meshid="125405780718494",textureid="",C0=angles(1.5707963267948966,0,1.5707963267948966),Name="Left Arm"},
+	{meshid="125405780718494",textureid="",C0=angles(-1.5707963267948966,0,1.5707963267948966),Name="Right Arm"},
 
-{meshid="14768666349",textureid="",C0=CFrame.identity,Name="Torso"},
-{meshid="14241018198",textureid="",C0=CFrame.identity,Name="Torso"},
-{meshid="13421774668",textureid="",C0=CFrame.identity,Name="Torso"},
+	-- meshless rig
+	{meshid="13953094351",textureid="",C0=cf_0,Name="Head"},
+	{meshid="127552124837034",textureid="",C0=angles(0,0,1.5707963267948966),Name="Torso"},
+	{meshid="121304376791439",textureid="",C0=cf_0,Name="Left Leg"},
+	{meshid="121304376791439",textureid="",C0=cf_0,Name="Right Leg"},
+	{meshid="117287001096396",textureid="",C0=cf_0,Name="Left Arm"},
+	{meshid="117287001096396",textureid="",C0=cf_0,Name="Right Arm"},
 
-{meshid="4324138105",textureid="4324138210",C0=CFrame.Angles(-1.6144295580947547,1.5707963267948966,0)*CFrame.new(-0.125,0.3,0),Name="Left Arm"},
-{meshid="3030546036",textureid="3443321249",C0=CFrame.Angles(-1.6144295580947547,-1.5707963267948966,0)*CFrame.new(0.125,0.3,0),Name="Right Arm"},
-{meshid="3030546036",textureid="3360978739",C0=CFrame.Angles(-1.6144295580947547,-1.5707963267948966,3.14)*CFrame.new(0,0.3,0),Name="Left Leg"},
-{meshid="3030546036",textureid="3409604993",C0=CFrame.Angles(-1.6144295580947547,1.5707963267948966,3.14)*CFrame.new(0,0.3,0),Name="Right Leg"},
+	-- head for noob rig
+	{meshid="13058309233",textureid="",C0=angles(0,3.141592653589793,0),Name="Head"},
+	-- offsale noob
+	{meshid="18640899369",textureid="",C0=cf_0,Name="Torso"},
+	{meshid="18640901641",textureid="",C0=cf_0,Name="Left Leg"},
+	{meshid="18640901641",textureid="",C0=cf_0,Name="Right Leg"},
+	{meshid="18640914129",textureid="",C0=cf_0,Name="Left Arm"},
+	{meshid="18640914129",textureid="",C0=cf_0,Name="Right Arm"},
+	-- onsale noob
+	{meshid="126825022897778",textureid="",C0=cf_0,Name="Torso"},
+	{meshid="",textureid="73798034827573",C0=angles(0,0,1.5707963267948966),Name="Left Leg"},
+	{meshid="",textureid="73798034827573",C0=angles(0,0,1.5707963267948966),Name="Right Leg"},
+	{meshid="",textureid="135650240593878",C0=angles(0,0,1.5707963267948966),Name="Left Arm"},
+	{meshid="",textureid="135650240593878",C0=angles(0,0,1.5707963267948966),Name="Right Arm"},
 
-{meshid="17374767929",textureid="17374768001",C0=CFrame.Angles(1.57,0,1.57),Name="Right Leg"},
-{meshid="17374767929",textureid="17374768001",C0=CFrame.Angles(1.57,0,1.57),Name="Left Leg"},
-{meshid="14768684979",textureid="14768683674",C0=CFrame.Angles(1.57,0,1.57),Name="Right Leg"},
-{meshid="14768684979",textureid="14768683674",C0=CFrame.Angles(1.57,0,1.57),Name="Left Leg"},
-{meshid="4819720316",textureid="4819722776",C0=CFrame.Angles(0,0,0.2617993877991494),Name="Torso"},
-
+	-- free rig
+	{meshid="4819720316",textureid="4819722776",C0=angles(0,0,rad(15)),Name="Torso"},
+	{meshid="3030546036",textureid="3033903209",C0=angles(0,0,rad(-90)),Name="Left Leg"},
+	{meshid="3030546036",textureid="3360978739",C0=angles(0,0,rad(90)),Name="Right Leg"},
+	{meshid="3030546036",textureid="3033898741",C0=angles(0,0,rad(-90)),Name="Left Arm"},
+	{meshid="3030546036",textureid="3409604993",C0=angles(0,0,rad(90)),Name="Right Arm"},
 },
 camerasensitivity=1.25,
 allowshiftlock=true,
@@ -102,7 +160,6 @@ shownregions=false,
 addaccessories={}
 }
 })
-
 script = game:GetObjects("rbxassetid://4789736147")[1].Main
 workspace=game.Workspace
 
