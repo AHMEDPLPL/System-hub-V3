@@ -1,29 +1,21 @@
-local currentToolSize = ""
-local currentGripPos = ""
-for i,v in pairs(speaker.Character:GetDescendants()) do
-		if v:IsA("Tool") then
-			if args[1] then
-				currentToolSize = v.Handle.Size
-				currentGripPos = v.GripPos
-				local a = Instance.new("SelectionBox")
-				a.Name = "SelectionBoxCreated"
-				a.Parent = v.Handle
-				a.Adornee = v.Handle
-				v.Handle.Massless = true
-				v.Handle.Size = Vector3.new(0.5,0.5,args[1])
-				v.GripPos = Vector3.new(0,0,0)
-				game.Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid'):UnequipTools()
-			else
-				currentToolSize = v.Handle.Size
-				currentGripPos = v.GripPos
-				local a = Instance.new("SelectionBox")
-				a.Name = "SelectionBoxCreated"
-				a.Parent = v.Handle
-				a.Adornee = v.Handle
-				v.Handle.Massless = true
-				v.Handle.Size = Vector3.new(0.5,0.5,60)
-				v.GripPos = Vector3.new(0,0,0)
-				game.Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid'):UnequipTools()
-			end
-		end
+local currentToolSize = Vector3.new()
+local currentGripPos = Vector3.new()
+
+for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+	if v:IsA("Tool") and v:FindFirstChild("Handle") then
+		local handle = v.Handle
+		currentToolSize = handle.Size
+		currentGripPos = v.GripPos
+
+		local selectionBox = Instance.new("SelectionBox")
+		selectionBox.Name = "SelectionBoxCreated"
+		selectionBox.Parent = handle
+		selectionBox.Adornee = handle
+
+		handle.Massless = true
+		handle.Size = Vector3.new(0.5, 0.5, type(args) == "table" and args[1] or 60)
+		v.GripPos = Vector3.new(0, 0, 0)
+
+		game.Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid'):UnequipTools()
 	end
+end
