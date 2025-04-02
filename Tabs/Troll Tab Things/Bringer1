@@ -1,4 +1,5 @@
- local Functions = {}
+--by myworld 
+local Functions = {}
 
 local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
