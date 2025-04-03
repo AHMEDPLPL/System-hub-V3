@@ -250,10 +250,10 @@ local discharscripts=discharscripts~=false and function(v) if IsA(v,"Script") th
 
 local permadeath = function()
       if replicatesignal and PremadeathEnabled then
-      replicatesignal(game.Players.LocalPlayer.Character.Humanoid.ServerBreakJoints)
-      wait(0.1)
-        replicatesignal(game.Players.LocalPlayer.ConnectDiedSignalBackend)
+replicatesignal(game.Players.LocalPlayer.ConnectDiedSignalBackend)
          wait(game.Players.RespawnTime + 0.1)
+wait(0.1)
+      replicatesignal(game.Players.LocalPlayer.Character.Humanoid.ServerBreakJoints)
     end
 end   
         
