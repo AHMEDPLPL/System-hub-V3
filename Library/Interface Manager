@@ -1,42 +1,41 @@
  local httpService = game:GetService("HttpService")
 
 local InterfaceManager = {} do
-    InterfaceManager.Folder = "FluentSettings"
+	InterfaceManager.Folder = "FluentSettings"
     InterfaceManager.Settings = {
         Theme = "Dark",
         Acrylic = true,
         Transparency = true,
-        MenuKeybind = "RightShift",
-        ReactiveWhenRejoin = false -- Added this setting
+        MenuKeybind = "LeftControl"
     }
 
     function InterfaceManager:SetFolder(folder)
-        self.Folder = folder
-        self:BuildFolderTree()
-    end
+		self.Folder = folder;
+		self:BuildFolderTree()
+	end
 
     function InterfaceManager:SetLibrary(library)
-        self.Library = library
-    end
+		self.Library = library
+	end
 
     function InterfaceManager:BuildFolderTree()
-        local paths = {}
+		local paths = {}
 
-        local parts = self.Folder:split("/")
-        for idx = 1, #parts do
-            paths[#paths + 1] = table.concat(parts, "/", 1, idx)
-        end
+		local parts = self.Folder:split("/")
+		for idx = 1, #parts do
+			paths[#paths + 1] = table.concat(parts, "/", 1, idx)
+		end
 
-        table.insert(paths, self.Folder)
-        table.insert(paths, self.Folder .. "/settings")
+		table.insert(paths, self.Folder)
+		table.insert(paths, self.Folder .. "/settings")
 
-        for i = 1, #paths do
-            local str = paths[i]
-            if not isfolder(str) then
-                makefolder(str)
-            end
-        end
-    end
+		for i = 1, #paths do
+			local str = paths[i]
+			if not isfolder(str) then
+				makefolder(str)
+			end
+		end
+	end
 
     function InterfaceManager:SaveSettings()
         writefile(self.Folder .. "/options.json", httpService:JSONEncode(InterfaceManager.Settings))
@@ -58,93 +57,58 @@ local InterfaceManager = {} do
 
     function InterfaceManager:BuildInterfaceSection(tab)
         assert(self.Library, "Must set InterfaceManager.Library")
-        local Library = self.Library
+		local Library = self.Library
         local Settings = InterfaceManager.Settings
 
         InterfaceManager:LoadSettings()
 
-        local section = tab:AddSection("Interface")
+		local section = tab:AddSection("Interface")
 
-        local InterfaceTheme = section:AddDropdown("InterfaceTheme", {
-            Title = "Theme",
-            Description = "Changes the interface theme.",
-            Values = Library.Themes,
-            Default = Settings.Theme,
-            Callback = function(Value)
-                Library:SetTheme(Value)
+		local InterfaceTheme = section:AddDropdown("InterfaceTheme", {
+			Title = "Theme",
+			Description = "Changes the interface theme.",
+			Values = Library.Themes,
+			Default = Settings.Theme,
+			Callback = function(Value)
+				Library:SetTheme(Value)
                 Settings.Theme = Value
                 InterfaceManager:SaveSettings()
-            end
-        })
+			end
+		})
 
         InterfaceTheme:SetValue(Settings.Theme)
-
-        if Library.UseAcrylic then
-            section:AddToggle("AcrylicToggle", {
-                Title = "Acrylic",
-                Description = "The blurred background requires graphic quality 8+",
-                Default = Settings.Acrylic,
-                Callback = function(Value)
-                    Library:ToggleAcrylic(Value)
+	
+		if Library.UseAcrylic then
+			section:AddToggle("AcrylicToggle", {
+				Title = "Acrylic",
+				Description = "The blurred background requires graphic quality 8+",
+				Default = Settings.Acrylic,
+				Callback = function(Value)
+					Library:ToggleAcrylic(Value)
                     Settings.Acrylic = Value
                     InterfaceManager:SaveSettings()
-                end
-            })
-        end
-
-        section:AddToggle("TransparentToggle", {
-            Title = "Transparency",
-            Description = "Makes the interface transparent.",
-            Default = Settings.Transparency,
-            Callback = function(Value)
-                Library:ToggleTransparency(Value)
-                Settings.Transparency = Value
+				end
+			})
+		end
+	
+		section:AddToggle("TransparentToggle", {
+			Title = "Transparency",
+			Description = "Makes the interface transparent.",
+			Default = Settings.Transparency,
+			Callback = function(Value)
+				Library:ToggleTransparency(Value)
+				Settings.Transparency = Value
                 InterfaceManager:SaveSettings()
-            end
-        })
-
-        local queueteleport = (syn and syn.queue_on_teleport) 
-                      or queue_on_teleport 
-                      or (fluxus and fluxus.queue_on_teleport) 
-                      or (krnl and krnl.queue_on_teleport) 
-                      or (proto and proto.queue_on_teleport) 
-                      or (uellen and uellen.queue_on_teleport) 
-                      or (venom and venom.queue_on_teleport) 
-                      or (traced and traced.queue_on_teleport) 
-                      or (sentinel and sentinel.queue_on_teleport) 
-                      or (scriptware and scriptware.queue_on_teleport) 
-                      or (solara and solara.queue_on_teleport) 
-                      or function() end
-                      
-        if queueteleport then
-            section:AddToggle("ReactiveToggle", {
-                Title = "Reactive When Rejoin",
-                Description = "Reactive System Hub when rejoin or going to another game",
-                Default = Settings.ReactiveWhenRejoin, -- Use the saved value
-                Callback = function(Value)
-                    print("Reactive When Rejoin:", Value)  -- Debugging line
-                    if Value or Settings.ReactiveWhenRejoin then
-                        InterfaceManager.Settings.ReactiveWhenRejoin = true
-                        InterfaceManager:SaveSettings()
-                    
-                     queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
-                     queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Library/Test'))()")
-                    else
-                        InterfaceManager.Settings.ReactiveWhenRejoin = false
-                        InterfaceManager:SaveSettings()
-                    end
-                end
-            })
-        end
-
-        local MenuKeybind = section:AddKeybind("MenuKeybind", { Title = "Minimize Bind", Default = Settings.MenuKeybind })
-        MenuKeybind:OnChanged(function()
-            Settings.MenuKeybind = MenuKeybind.Value
+			end
+		})
+	
+		local MenuKeybind = section:AddKeybind("MenuKeybind", { Title = "Minimize Bind", Default = Settings.MenuKeybind })
+		MenuKeybind:OnChanged(function()
+			Settings.MenuKeybind = MenuKeybind.Value
             InterfaceManager:SaveSettings()
-        end)
-        Library.MinimizeKeybind = MenuKeybind
+		end)
+		Library.MinimizeKeybind = MenuKeybind
     end
-
 end
 
 return InterfaceManager
