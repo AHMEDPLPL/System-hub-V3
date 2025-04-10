@@ -123,16 +123,12 @@ local InterfaceManager = {} do
                 Default = Settings.ReactiveWhenRejoin, -- Use the saved value
                 Callback = function(Value)
                     print("Reactive When Rejoin:", Value)  -- Debugging line
-                    if Value then
+                    if Value or Settings.ReactiveWhenRejoin then
                         InterfaceManager.Settings.ReactiveWhenRejoin = true
                         InterfaceManager:SaveSettings()
-
-                        local loader = [[
-                            loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Library/Test"))();
-                        ]]
-                        
-                        print("Queuing teleport...")  -- Debugging line
-                        queueteleport(loader)
+                    
+                     queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
+                     queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Library/Test'))()")
                     else
                         InterfaceManager.Settings.ReactiveWhenRejoin = false
                         InterfaceManager:SaveSettings()
