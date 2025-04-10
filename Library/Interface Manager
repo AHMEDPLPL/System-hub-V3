@@ -124,9 +124,11 @@ local InterfaceManager = {} do
                 Callback = function(Value)
                     Settings.ReactiveWhenRejoin = Value
                     InterfaceManager:SaveSettings()
+                    loader=[[loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Library/Test"))();]]
 
                     if Value then
-                        queueteleport("InterfaceManager:Rejoin()")
+
+                        queueteleport(loader)
                     end
                 end
             })
@@ -140,9 +142,6 @@ local InterfaceManager = {} do
         Library.MinimizeKeybind = MenuKeybind
     end
 
-    function InterfaceManager:Rejoin()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Library/Test"))()
-    end
 end
 
 return InterfaceManager
