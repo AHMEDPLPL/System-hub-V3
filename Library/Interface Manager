@@ -1,4 +1,4 @@
-local httpService = game:GetService("HttpService")
+ local httpService = game:GetService("HttpService")
 
 local InterfaceManager = {} do
     InterfaceManager.Folder = "FluentSettings"
@@ -120,15 +120,20 @@ local InterfaceManager = {} do
             section:AddToggle("ReactiveToggle", {
                 Title = "Reactive When Rejoin",
                 Description = "Reactive System Hub when rejoin or going to another game",
-                Default = Settings.ReactiveWhenRejoin,
+                Default = Settings.ReactiveWhenRejoin, -- Use the saved value
                 Callback = function(Value)
-                    Settings.ReactiveWhenRejoin = Value
-                    InterfaceManager:SaveSettings()
-                    loader=[[loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Library/Test"))();]]
-
                     if Value then
+                        InterfaceManager.Settings.ReactiveWhenRejoin = true
+                        InterfaceManager:SaveSettings()
 
+                        local loader = [[
+                            loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Library/Test"))();
+                        ]]
+                        
                         queueteleport(loader)
+                    else
+                        InterfaceManager.Settings.ReactiveWhenRejoin = false
+                        InterfaceManager:SaveSettings()
                     end
                 end
             })
