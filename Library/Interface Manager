@@ -141,7 +141,7 @@ local InterfaceManager = {} do
     end
 
     function InterfaceManager:Rejoin()
-        print("Rejoined and reactive system is applied.")
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Library/Test"))()
     end
 end
 
