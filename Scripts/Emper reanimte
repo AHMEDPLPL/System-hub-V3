@@ -602,9 +602,8 @@ do
 			end
 
 			if OptionsPermanentDeath and replicatesignal then
-				replicatesignal(ConnectDiedSignalBackend)
-
-				taskwait(Players.RespawnTime + 0.1)
+				replicatesignal(game.Players.LocalPlayer.ConnectDiedSignalBackend)
+      wait(game.Players.RespawnTime + 0.1)
 
 				Refitting = false
 				replicatesignal(Kill)
