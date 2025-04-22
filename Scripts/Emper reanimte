@@ -923,6 +923,9 @@ do
 		if IsRunning then
 			IsFirst = false
 			IsRunning = false
+                        if OptionsPermanentDeath and replicatesignal then
+				replicatesignal(ConnectDiedSignalBackend)
+			end
 
 			for Index, Highlight in Highlights do
 				Destroy(Highlight)
@@ -948,9 +951,6 @@ do
 
 			Destroy(Rig)
 
-			if OptionsPermanentDeath and replicatesignal then
-				replicatesignal(ConnectDiedSignalBackend)
-			end
 
 			if OptionsDisableHealthBar and not GetCoreGuiEnabled(StarterGui, Health) then
 				SetCoreGuiEnabled(StarterGui, Health, IsHealthEnabled)
