@@ -921,11 +921,13 @@ do
 
 	Stop = function()
 		if IsRunning then
-			IsFirst = false
-			IsRunning = false
-                        if OptionsPermanentDeath and replicatesignal then
+
+
+if OptionsPermanentDeath and replicatesignal then
 				replicatesignal(ConnectDiedSignalBackend)
 			end
+			IsFirst = false
+			IsRunning = false
 
 			for Index, Highlight in Highlights do
 				Destroy(Highlight)
