@@ -1,4 +1,4 @@
-do
+ do
 	local Accessories = {}
 
 	local Aligns = {}
@@ -844,9 +844,6 @@ do
 				SetCoreGuiEnabled(StarterGui, Health, false)
 			end
 
-			BindableEvent = Instancenew("BindableEvent")
-			tableinsert(RBXScriptConnections, Connect(BindableEvent.Event, Stop))
-
 			Rig = Options.R15 and Clone(R15HumanoidModel) or Clone(HumanoidModel)
 			Rig.Name = "non"
 			RigHumanoid = Rig.Humanoid
@@ -896,23 +893,8 @@ do
 				tableinsert(RBXScriptConnections, Connect(PreSimulation, OnPreSimulation))
 			end
 			
-			IsRegistered = pcall(SetCore, StarterGui, "ResetButtonCallback", BindableEvent)
-			
-			if not IsRegistered then
-				taskspawn(function()
-					for Index = 1, 7 do
-						if not IsRegistered then
-							IsRegistered = pcall(SetCore, StarterGui, "ResetButtonCallback", BindableEvent)
-							taskwait()
-						else
-							break
-						end
-					end
-				end)
-			end
 
 			return {
-				BindableEvent = BindableEvent,
 				Fling = Fling,
 				Rig = Rig
 			}
@@ -921,9 +903,7 @@ do
 
 	Stop = function()
 		if IsRunning then
-
-
-if OptionsPermanentDeath and replicatesignal then
+            if OptionsPermanentDeath and replicatesignal then
 				replicatesignal(ConnectDiedSignalBackend)
 			end
 			IsFirst = false
@@ -956,13 +936,20 @@ if OptionsPermanentDeath and replicatesignal then
 
 			if OptionsDisableHealthBar and not GetCoreGuiEnabled(StarterGui, Health) then
 				SetCoreGuiEnabled(StarterGui, Health, IsHealthEnabled)
-			end
-
-			if IsRegistered then
-				pcall(SetCore, StarterGui, "ResetButtonCallback", true)
-			else
-				IsRegistered = pcall(SetCore, StarterGui, "ResetButtonCallback", true)
-			end
+			end	
+				
+			pcall(function()
+                StarterGui:SetCore("ResetButtonCallback", true)
+            end)
 		end
 	end
 end
+
+local StarterGui = game:GetService("StarterGui")
+
+local bindableevent = Instance.new("BindableEvent")
+bindableevent.Event:Connect(Stop)
+
+pcall(function()
+    StarterGui:SetCore("ResetButtonCallback", bindableevent)
+end)
