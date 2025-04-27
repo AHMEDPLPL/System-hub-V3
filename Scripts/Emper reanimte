@@ -1,4 +1,4 @@
-  do
+ do
 	local Accessories = {}
 
 	local Aligns = {}
@@ -844,6 +844,9 @@
 				SetCoreGuiEnabled(StarterGui, Health, false)
 			end
 
+			BindableEvent = Instancenew("BindableEvent")
+			tableinsert(RBXScriptConnections, Connect(BindableEvent.Event, Stop))
+
 			Rig = Options.R15 and Clone(R15HumanoidModel) or Clone(HumanoidModel)
 			Rig.Name = "non"
 			RigHumanoid = Rig.Humanoid
@@ -893,63 +896,73 @@
 				tableinsert(RBXScriptConnections, Connect(PreSimulation, OnPreSimulation))
 			end
 			
+			IsRegistered = pcall(SetCore, StarterGui, "ResetButtonCallback", BindableEvent)
+			
+			if not IsRegistered then
+				taskspawn(function()
+					for Index = 1, 7 do
+						if not IsRegistered then
+							IsRegistered = pcall(SetCore, StarterGui, "ResetButtonCallback", BindableEvent)
+							taskwait()
+						else
+							break
+						end
+					end
+				end)
+			end
 
 			return {
+				BindableEvent = BindableEvent,
 				Fling = Fling,
 				Rig = Rig
 			}
 		end
 	end
 
-	local StarterGui = game:GetService("StarterGui")
+	Stop = function()
+		if IsRunning then
 
-local bindableevent = Instance.new("BindableEvent")
 
-local function stop()
-	if IsRunning then
-		if OptionsPermanentDeath and replicatesignal then
-			replicatesignal(ConnectDiedSignalBackend)
-		end
-		IsFirst = false
-		IsRunning = false
+if OptionsPermanentDeath and replicatesignal then
+				replicatesignal(ConnectDiedSignalBackend)
+			end
+			IsFirst = false
+			IsRunning = false
 
-		for Index, Highlight in pairs(Highlights) do
-			Destroy(Highlight)
-		end
+			for Index, Highlight in Highlights do
+				Destroy(Highlight)
+			end
 
-		table.clear(Highlights)
+			tableclear(Highlights)
 
-		for Index, RBXScriptConnection in pairs(RBXScriptConnections) do
-			Disconnect(RBXScriptConnection)
-		end
+			for Index, RBXScriptConnection in next, RBXScriptConnections do
+				Disconnect(RBXScriptConnection)
+			end
 
-		table.clear(RBXScriptConnections)
+			tableclear(RBXScriptConnections)
 
-		Destroy(BindableEvent)
+			Destroy(BindableEvent)
 
-		if Character.Parent == Rig then
-			Character.Parent = Workspace
-		end
+			if Character.Parent == Rig then
+				Character.Parent = Workspace
+			end
 
-		if Humanoid then
-			ChangeState(Humanoid, Dead)
-		end
+			if Humanoid then
+				ChangeState(Humanoid, Dead)
+			end
 
-		Destroy(Rig)
+			Destroy(Rig)
 
-		if OptionsDisableHealthBar and not GetCoreGuiEnabled(StarterGui, Health) then
-			SetCoreGuiEnabled(StarterGui, Health, IsHealthEnabled)
-		end	
 
-		pcall(function()
-			StarterGui:SetCore("ResetButtonCallback", true)
-		end)
+			if OptionsDisableHealthBar and not GetCoreGuiEnabled(StarterGui, Health) then
+				SetCoreGuiEnabled(StarterGui, Health, IsHealthEnabled)
+			end
+
+			if IsRegistered then
+				pcall(SetCore, StarterGui, "ResetButtonCallback", true)
+			else
+				IsRegistered = pcall(SetCore, StarterGui, "ResetButtonCallback", true)
+			end
 		end
 	end
 end
-
-bindableevent.Event:Connect(Stop)
-
-pcall(function()
-	StarterGui:SetCore("ResetButtonCallback", bindableevent)
-end)
