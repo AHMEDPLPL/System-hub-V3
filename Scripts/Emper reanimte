@@ -1,4 +1,4 @@
- do
+  do
 	local Accessories = {}
 
 	local Aligns = {}
@@ -905,7 +905,7 @@
 
 local bindableevent = Instance.new("BindableEvent")
 
-local function Stop()
+local function stop()
 	if IsRunning then
 		if OptionsPermanentDeath and replicatesignal then
 			replicatesignal(ConnectDiedSignalBackend)
@@ -944,6 +944,7 @@ local function Stop()
 		pcall(function()
 			StarterGui:SetCore("ResetButtonCallback", true)
 		end)
+		end
 	end
 end
 
