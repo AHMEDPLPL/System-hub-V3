@@ -901,55 +901,54 @@
 		end
 	end
 
-	Stop = function()
-		if IsRunning then
-            if OptionsPermanentDeath and replicatesignal then
-				replicatesignal(ConnectDiedSignalBackend)
-			end
-			IsFirst = false
-			IsRunning = false
+	local StarterGui = game:GetService("StarterGui")
 
-			for Index, Highlight in Highlights do
-				Destroy(Highlight)
-			end
+local bindableevent = Instance.new("BindableEvent")
 
-			tableclear(Highlights)
-
-			for Index, RBXScriptConnection in next, RBXScriptConnections do
-				Disconnect(RBXScriptConnection)
-			end
-
-			tableclear(RBXScriptConnections)
-
-			Destroy(BindableEvent)
-
-			if Character.Parent == Rig then
-				Character.Parent = Workspace
-			end
-
-			if Humanoid then
-				ChangeState(Humanoid, Dead)
-			end
-
-			Destroy(Rig)
-
-
-			if OptionsDisableHealthBar and not GetCoreGuiEnabled(StarterGui, Health) then
-				SetCoreGuiEnabled(StarterGui, Health, IsHealthEnabled)
-			end	
-				
-			pcall(function()
-                StarterGui:SetCore("ResetButtonCallback", true)
-            end)
+local function Stop()
+	if IsRunning then
+		if OptionsPermanentDeath and replicatesignal then
+			replicatesignal(ConnectDiedSignalBackend)
 		end
+		IsFirst = false
+		IsRunning = false
+
+		for Index, Highlight in pairs(Highlights) do
+			Destroy(Highlight)
+		end
+
+		table.clear(Highlights)
+
+		for Index, RBXScriptConnection in pairs(RBXScriptConnections) do
+			Disconnect(RBXScriptConnection)
+		end
+
+		table.clear(RBXScriptConnections)
+
+		Destroy(BindableEvent)
+
+		if Character.Parent == Rig then
+			Character.Parent = Workspace
+		end
+
+		if Humanoid then
+			ChangeState(Humanoid, Dead)
+		end
+
+		Destroy(Rig)
+
+		if OptionsDisableHealthBar and not GetCoreGuiEnabled(StarterGui, Health) then
+			SetCoreGuiEnabled(StarterGui, Health, IsHealthEnabled)
+		end	
+
+		pcall(function()
+			StarterGui:SetCore("ResetButtonCallback", true)
+		end)
 	end
 end
 
-local StarterGui = game:GetService("StarterGui")
-
-local bindableevent = Instance.new("BindableEvent")
 bindableevent.Event:Connect(Stop)
 
 pcall(function()
-    StarterGui:SetCore("ResetButtonCallback", bindableevent)
+	StarterGui:SetCore("ResetButtonCallback", bindableevent)
 end)
