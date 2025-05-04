@@ -921,17 +921,27 @@
 
 	Stop = function()
 		if IsRunning then
-
-
-if OptionsPermanentDeath and replicatesignal then
-				replicatesignal(ConnectDiedSignalBackend)
-			end
 			IsFirst = false
 			IsRunning = false
+                        if OptionsPermanentDeath and replicatesignal then
+				replicatesignal(game.Players.LocalPlayer.ConnectDiedSignalBackend)
+			end
+
+                       wait(1)
+
+			if Character.Parent == Rig then
+				Character.Parent = Workspace
+			end
+
+			if Humanoid then
+				ChangeState(Humanoid, Dead)
+			end
 
 			for Index, Highlight in Highlights do
 				Destroy(Highlight)
 			end
+
+                        Destroy(Rig)
 
 			tableclear(Highlights)
 
@@ -943,15 +953,6 @@ if OptionsPermanentDeath and replicatesignal then
 
 			Destroy(BindableEvent)
 
-			if Character.Parent == Rig then
-				Character.Parent = Workspace
-			end
-
-			if Humanoid then
-				ChangeState(Humanoid, Dead)
-			end
-
-			Destroy(Rig)
 
 
 			if OptionsDisableHealthBar and not GetCoreGuiEnabled(StarterGui, Health) then
