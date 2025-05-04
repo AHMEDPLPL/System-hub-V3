@@ -923,6 +923,13 @@
 		if IsRunning then
 			IsFirst = false
 			IsRunning = false
+
+                        for Index, Highlight in Highlights do
+				Destroy(Highlight)
+			end
+
+			tableclear(Highlights)
+
                         if OptionsPermanentDeath and replicatesignal then
 				replicatesignal(game.Players.LocalPlayer.ConnectDiedSignalBackend)
 			end
@@ -935,13 +942,8 @@
 				ChangeState(Humanoid, Dead)
 			end
 
-			for Index, Highlight in Highlights do
-		             Highlight:Destroy()
-			end
+                        Destroy(Rig)
 
-                        Rig:Destroy()
-
-			tableclear(Highlights)
 
 			for Index, RBXScriptConnection in next, RBXScriptConnections do
 				Disconnect(RBXScriptConnection)
