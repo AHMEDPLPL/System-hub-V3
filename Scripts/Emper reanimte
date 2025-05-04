@@ -927,8 +927,6 @@
 				replicatesignal(game.Players.LocalPlayer.ConnectDiedSignalBackend)
 			end
 
-                       wait(1)
-
 			if Character.Parent == Rig then
 				Character.Parent = Workspace
 			end
@@ -938,10 +936,10 @@
 			end
 
 			for Index, Highlight in Highlights do
-				Destroy(Highlight)
+		             Highlight:Destroy()
 			end
 
-                        Destroy(Rig)
+                        Rig:Destroy()
 
 			tableclear(Highlights)
 
