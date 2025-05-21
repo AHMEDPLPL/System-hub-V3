@@ -235,7 +235,7 @@
 				if sethiddenproperty then
 					sethiddenproperty(Descendant, "BackendAccoutrementState", 0)
 				elseif setscriptable then
-					setscriptable(Descendant, "BacekndAccoutrementState", true)
+					setscriptable(Descendant, "BackendAccoutrementState", true)
 					Descendant.BackendAccoutrementState = 0
 				end
 			end
