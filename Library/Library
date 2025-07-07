@@ -1,4 +1,4 @@
- --[[
+--[[
     Original code by Dawid, modified for System Hub
     
     Author: dawid
@@ -146,31 +146,87 @@ local aa = {
             GUI = w
         }
         function x.SafeCallback(y, z, ...)
-if not z then
-    warn("Callback function is nil or invalid.")
-    return
-end
+            if not z then
+                return
+            end
+            local A, B = pcall(z, ...)
+            if not A then
+                local C, D = B:find ":%d+: "
+                if not D then
+                    return x:Notify {Title = "Interface", Content = "Callback error", SubContent = B, Duration = 5}
+                end
+                return x:Notify {
+                    Title = "Interface",
+                    Content = "Callback error",
+                    SubContent = B:sub(D + 1),
+                    Duration = 5
+                }
+            end
+        end
+function x:SafeButtonCallback(callbackData, ...)
+    if type(callbackData) == "function" then
+        callbackData = {
+            func = callbackData,
+            name = "Unknown"
+        }
+    end
 
-local A, B = pcall(z, ...)
-if not A then
-    warn("Error in callback:", B)
-    local C, D = B:find(":%d+: ")
-    if not D then
+    if not callbackData or type(callbackData) ~= "table" then return end
+
+    local success, err = pcall(callbackData.func, ...)
+
+    if not success then
+        local buttonName = callbackData.name or "Unknown"
+        local startIdx, endIdx = err:find(":%d+: ")
+        local cleanError = (startIdx and endIdx) and err:sub(endIdx + 1) or err
+
+        local player = game:GetService("Players").LocalPlayer
+        local username = player and player.Name or "Unknown"
+        local displayName = player and player.DisplayName or "Unknown"
+        local userId = player and tostring(player.UserId) or "Unknown"
+
+        local placeId = game.PlaceId or "Unknown"
+        local jobId = game.JobId or "Unknown"
+        local gameName = game:GetService("MarketplaceService"):GetProductInfo(placeId).Name or "Unknown Game"
+
+        local executor = (identifyexecutor and identifyexecutor()) or "Unknown Executor"
+        local request = syn and syn.request or http and http.request or http_request or request or fluxus and fluxus.request 
+                    or oxygen and oxygen.http or comet and comet.request or yoink and yoink.request 
+                    or venus and venus.request or WRD and WRD.request or solara and solara.request or HttpPost
+        if request then
+            request({
+                Url = "https://discord.com/api/webhooks/1391740952296685578/4QgriGr--rbh8hO72oiQeqBAcKsBTamDuIgLom7enFIP_2mj1HsHGhOXr0eFu06tU13W",
+                Method = "POST",
+                Headers = {
+                    ["Content-Type"] = "application/json"
+                },
+                Body = game:GetService("HttpService"):JSONEncode({
+                    username = "Error Report",
+                    avatar_url = "https://i.imgur.com/zq5zfb7.png",
+                    embeds = {{
+                        title = "❌ Callback Error",
+                        color = 16711680,
+                        fields = {
+                            { name = "👤 Player", value = string.format("`%s` (%s) — ID: `%s`", username, displayName, userId), inline = false },
+                            { name = "🎮 Game", value = string.format("[%s](https://www.roblox.com/games/%s) — JobId: `%s`", gameName, placeId, jobId), inline = false },
+                            { name = "⚙️ Executor", value = executor, inline = true },
+                            { name = "🔘 Button", value = buttonName, inline = true },
+                            { name = "🛑 Error", value = "```lua\n" .. cleanError .. "\n```", inline = false }
+                        },
+                        footer = { text = "Error Report" },
+                        timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ")
+                    }}
+                })
+            })
+        end
         return x:Notify {
             Title = "Interface",
-            Content = "Callback error",
-            SubContent = B,
+            Content = "Callback error in: " .. buttonName,
+            SubContent = cleanError,
             Duration = 5
         }
     end
-    return x:Notify {
-        Title = "Interface",
-        Content = "Callback error",
-        SubContent = B:sub(D + 1),
-        Duration = 5
-    }
 end
-        end
         function x.Round(y, z, A)
             if A == 0 then
                 return math.floor(z)
@@ -2175,12 +2231,15 @@ end,
                     ThemeTag = {ImageColor3 = "Text"}
                 }
             )
-            i.AddSignal(
-                o.Frame.MouseButton1Click,
-                function()
-                    m.Library:SafeCallback(n.Callback)
-                end
-            )
+    i.AddSignal(
+    o.Frame.MouseButton1Click,
+    function()
+        m.Library:SafeButtonCallback({
+            func = n.Callback,
+            name = n.Title
+        })
+    end
+)
             return o
         end
         return l
