@@ -1,0 +1,896 @@
+return function(Window)
+
+Tab = Window:AddTab({ Title = "FE Animations", Icon = "rbxassetid://7743875962" })
+
+local UserInputService = game:GetService("UserInputService")
+local IsOnMobile = table.find({
+	Enum.Platform.IOS,
+	Enum.Platform.Android
+}, UserInputService:GetPlatform())
+
+local plr = game.Players.LocalPlayer
+local Player = game.Players.LocalPlayer
+local Character = Player.Character
+
+if  IsOnMobile then
+Tab:AddButton({Title = "Keyboard",	Callback = function()  
+   	loadstring(game:HttpGet("https://raw.githubusercontent.com/GGH52lan/GGH52lan/main/keyboard.txt"))() 
+end})
+end
+
+Tab:AddToggle("MyToggle", {Title = "Touch Fling", Default = false ,Callback = function(state)
+        if state == true then
+            walkflinging = false
+            local RunService = game:GetService("RunService")
+            local character = game.Players.LocalPlayer.Character
+            
+            function getRoot(char)
+            local rootPart = game.Players.LocalPlayer.Character:FindFirstChild('HumanoidRootPart') or game.Players.LocalPlayer.Character:FindFirstChild('Torso') or game.Players.LocalPlayer.Character:FindFirstChild('UpperTorso')
+      	  return rootPart
+            end
+            local humanoid = character and character:FindFirstChildWhichIsA("Humanoid")
+            if humanoid then
+                humanoid.Died:Connect(function()
+                    walkflinging = false
+                end)
+            end
+
+            walkflinging = true
+            repeat
+                RunService.Heartbeat:Wait()
+                local root = getRoot(character)
+
+                while not (character and character.Parent and root and root.Parent) do
+                    RunService.Heartbeat:Wait()
+                    character = speaker.Character
+                    root = getRoot(character)
+                end
+
+                local vel = root.Velocity
+                root.Velocity = vel * 10000 + Vector3.new(0, 10000, 0)
+
+                RunService.RenderStepped:Wait()
+                if character and character.Parent and root and root.Parent then
+                    root.Velocity = vel
+                end
+
+                RunService.Stepped:Wait()
+                if character and character.Parent and root and root.Parent then
+                    root.Velocity = vel + Vector3.new(0, 0.1, 0)
+                end
+            until walkflinging == false
+        else
+            walkflinging = false
+        end
+    end
+})
+
+Tab:AddToggle("MyToggle", {Title = "Dance", Default = false ,Callback = function(state)
+        if state then
+            local dances = {"27789359", "30196114", "248263260", "45834924", "33796059", "28488254", "52155728"}
+            if Character.Humanoid.RigType == Enum.HumanoidRigType.R15 then
+                dances = {"3333432454", "4555808220", "4049037604", "4555782893", "10214311282", "10714010337", "10713981723", "10714372526", "10714076981", "10714392151", "11444443576"}
+            end
+
+            local animation = Instance.new("Animation")
+            animation.AnimationId = "rbxassetid://" .. dances[math.random(1, #dances)]
+            local humanoid = Character:FindFirstChildWhichIsA("Humanoid")
+            if humanoid then
+                danceTrack = humanoid:LoadAnimation(animation)
+                danceTrack.Looped = true
+                danceTrack:Play()
+            end
+        else
+            if danceTrack then
+                danceTrack:Stop()
+                danceTrack:Destroy()
+            end
+        end
+    end
+})
+
+local Section = Tab:AddSection("Animation Guis")
+
+Tab:AddButton({Title = "Eazvy Hub",  Callback = function()
+      	loadstring(game:HttpGet("https://raw.githubusercontent.com/Eazvy/public-scripts/main/Universal_Animations_Emotes.lua"))()
+end})
+
+Tab:AddButton({Title = "Energize Gui",Callback = function()
+    loadstring(game:HttpGet(('https://pastebin.com/raw/1p6xnBNf'),true))()
+end})
+
+if plr.Character.Humanoid.RigType == Enum.HumanoidRigType.R6 then
+
+local Section = Tab:AddSection("FE R6 Animations")
+
+Tab:AddButton({Title = "FE Workout Animation",  Callback = function()
+OrionLib:MakeNotification({
+       Title = "System Hub",
+       Content = "If The Animation Didn't Work Then Click Another Time",
+       Image = "rbxassetid://6031075938",  
+       Time = 5
+})
+loadstring(game:HttpGet("https://pastebin.com/raw/u74kjvFE"))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/SussyAstro/workoutscript-/main/workoutscriptroblox'))()
+
+end})
+
+Tab:AddButton({Title = "FE Sad Boy Animation",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/062ec2b9f4fceeb477fc21430f651bf3/raw/41f4a5e64b210d7a32a5521d8369b72d3716afe1/FE%2520Sad%2520Boy"))()  	
+end})
+
+Tab:AddButton({Title = "FE Naruto Animation",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/fd566163868b009d840e6f8df4bbe9a9/raw/99c34a8107c719716ee2110b9729ab6391afde64/FE%2520Naruto"))()  	
+end})
+
+Tab:AddButton({Title = "FE The Distorted Animation",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/441d2206087c9821b68be16b639f0de0/raw/24685d2add228b036bdb2b501144e7a2f84a89af/FE%2520The%2520Distorted"))()  	
+end})
+
+Tab:AddButton({Title = "FE The Pacifist Animation",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/6ca17b1dbbd1cfe8a8b021c8e02840de/raw/eae608e8f4777f2fd5c8c89840b48caa418c51e1/FE%2520The%2520Pacifist"))()  	
+end})
+
+Tab:AddButton({Title = "FE Furry Animation",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/2e64b8c6e951fe0da6da7e2788fde422/raw/cf452021f0657b099663199a1e4396dd31bfbb35/FE%2520Furry"))()  	
+end})
+
+Tab:AddButton({Title = "FE Dog Animation",Callback = function()
+        loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/cf9960ef3c3c697b8f2806a5ec7c9c28/raw/015a98ac087fd0f13f8a3d560273f42c3969ad0c/Dog%2520animation"))()
+end})
+
+Tab:AddButton({Title = "FE Chill Animation",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/9583bff1635e88bc89b6cadc790832da/raw/d9a213dc80c827c765efdc08360e95e2b6325165/FE%2520Chill"))()  	
+end})
+
+Tab:AddButton({Title = "FE Nameless Animation",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/e6cb83609cf7d8d2c0131dbf9716877c/raw/c486dfb47502f790af01fb9811a0048127cb82ef/FE%2520Nameless%2520Animation"))()  	
+end})
+
+Tab:AddButton({Title = "FE Booty Animation",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/f47ce083f2e003cdcfd38d989fa9c063/raw/e743d63dc0dd83617494dc9aea2ff53624878fb9/FE%2520Booty"))()  	
+end})
+
+Tab:AddButton({Title = "FE Man Animation",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/0f70ebdec6c190e79d8772d7485bf0df/raw/bf743a30bb34b1f2271a6fc6e7696e7ad4c56489/FE%2520Man%2520Animation"))()  	
+end})
+
+Tab:AddButton({Title = "FE Sonic Animation",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/c072d2f569cd1fa5a05a9338b0af0f3a/raw/a2fc7f9258bebc05805e9f7ed5e1e64d300f8632/FE%2520Sonic"))()  	
+end})
+
+Tab:AddButton({Title = "FE 2006 Animation",Callback = function()
+     	loadstring(game:HttpGet("https://pastebin.com/raw/m0Z6DUwn"))()
+end})
+
+Tab:AddButton({Title = "FE Rickroll Dance",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/7a1ea6818a836b031446378363abf4f3/raw/00a84862215ed5c4991a6aae5452be3a45255468/FE%2520Rickroll"))()  	
+end})
+
+Tab:AddButton({Title = "FE Retard Dance",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/25f01d6dd7ce57d45ba6e06b86668df3/raw/37b64079e1cb23e361ce328bbc4a58dc7f05b050/FE%2520Retard%2520Dance"))()  	
+end})
+
+local Section = Tab:AddSection("Dances")
+
+local SdaDancefunction 
+
+task.spawn(function()
+    local success, result = pcall(function()
+        return loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/a14a3b603309b4283a349a379c29ddca/raw/c3a882220f02fb45e3ae2cf2838bea8ae5d90848/Sda%2520Dance"))()
+    end)
+    
+    if success then
+        SdaDancefunction = result
+    else
+        
+    end
+end)
+
+Tab:AddButton({Title = "Orange Justice Dance",Callback = function()
+                SdaDancefunction:Dance(3262592866)
+end})
+
+Tab:AddButton({Title = "Billy Bounce Dance",  Callback = function()
+      	SdaDancefunction:Dance(3381474830)
+end})
+
+Tab:AddButton({Title = "Anthony Dance",  Callback = function()
+SdaDancefunction:Dance(4809145259)
+end})
+
+Tab:AddButton({Title = "Goopie Dance",  Callback = function()
+      	SdaDancefunction:Dance(5238669868)
+end})
+
+Tab:AddButton({Title = "Casey Dance",  Callback = function()
+      	SdaDancefunction:Dance(3442913250)
+end})
+
+Tab:AddButton({Title = "Default Dance",  Callback = function()
+      SdaDancefunction:Dance(6495653138)
+end})
+
+Tab:AddButton({Title = "RickRoll Dance",  Callback = function()
+      SdaDancefunction:Dance(4459292790)
+end})
+
+Tab:AddButton({Title = "Breakdown Dance",  Callback = function()
+     SdaDancefunction:Dance(4558409610)
+end})
+
+Tab:AddButton({Title = "Take The L Dance",  Callback = function()
+      	SdaDancefunction:Dance(4827299133)
+end})
+
+Tab:AddButton({Title = "Robot Dance",  Callback = function()
+      	SdaDancefunction:Dance(4785986705)
+end})
+
+Tab:AddButton({Title = "Sumg Dance",  Callback = function()
+      	SdaDancefunction:Dance(5749601734)
+end})
+
+Tab:AddButton({Title = "Floss Dance",  Callback = function()
+      	SdaDancefunction:Dance(4812941481)
+end})
+
+Tab:AddButton({Title = "Electro Shuffle Dance",  Callback = function()
+      SdaDancefunction:Dance(3619935462)	
+end})
+
+Tab:AddButton({Title = "Rat Dance",  Callback = function()
+      SdaDancefunction:Dance(4746273203)
+end})
+
+Tab:AddButton({Title = "Whip Dance",  Callback = function()
+      SdaDancefunction:Dance(4633952191)
+end})
+
+Tab:AddButton({Title = "Pog Dance",  Callback = function()
+      SdaDancefunction:Dance(4300228160)
+end})
+
+Tab:AddButton({Title = "Kakyoin Dance",  Callback = function()
+      	SdaDancefunction:Dance(3448856633)
+end})
+
+Tab:AddButton({Title = "Dance",  Callback = function()
+      SdaDancefunction:Dance(101876334315959)	
+end})
+
+Tab:AddButton({Title = "Howard Dance",  Callback = function()
+      SdaDancefunction:Dance(4525385199)
+end})
+
+Tab:AddButton({Title = "Truk Dance",  Callback = function()
+      SdaDancefunction:Dance(3259216638)	
+end})
+
+Tab:AddButton({Title = "Joy Dance",  Callback = function()
+      SdaDancefunction:Dance(3564937614)
+end})
+
+Tab:AddButton({Title = "Scout Dance",  Callback = function()
+      SdaDancefunction:Dance(4679511279)
+end})
+
+Tab:AddButton({Title = "Pyro Dance",  Callback = function()
+      SdaDancefunction:Dance(4678151003)
+end})
+
+Tab:AddButton({Title = "Soldier Dance",  Callback = function()
+      SdaDancefunction:Dance(4787449997)
+end})
+
+Tab:AddButton({Title = "Electro Swing Dance",  Callback = function()
+      SdaDancefunction:Dance(4820078879)
+end})
+
+Tab:AddButton({Title = "Side Hustle Dance",  Callback = function()
+      SdaDancefunction:Dance(4841015627)
+end})
+
+Tab:AddButton({Title = "Dream Feet Dance",  Callback = function()
+      SdaDancefunction:Dance(4300218011)
+end})
+
+Tab:AddButton({Title = "Demoman Dance",  Callback = function()
+      SdaDancefunction:Dance(4764153637)
+end})
+
+Tab:AddButton({Title = "Medic Dance",  Callback = function()
+      SdaDancefunction:Dance(4679640288)
+end})
+
+Tab:AddButton({Title = "No Touching Dance",  Callback = function()
+      SdaDancefunction:Dance(3414624197)
+end})
+
+Tab:AddButton({Title = "Snoop Dance",  Callback = function()
+      	SdaDancefunction:Dance(4831391731)
+end})
+
+Tab:AddButton({Title = "Smooth Moves",  Callback = function()
+      	SdaDancefunction:Dance(4900539662)
+end})
+
+Tab:AddButton({Title = "Arm Shufflen Dance",  Callback = function()
+      SdaDancefunction:Dance(3607744332)	
+end})
+
+Tab:AddButton({Title = "Shuffle Dance",  Callback = function()
+      SdaDancefunction:Dance(3485013176)
+end})
+
+Tab:AddButton({Title = "Aerostep Dance",  Callback = function()
+      SdaDancefunction:Dance(4776588732)
+end})
+
+Tab:AddButton({Title = "Clean Groove Dance",  Callback = function()
+      SdaDancefunction:Dance(4776734129)
+end})
+
+Tab:AddButton({Title = "Double Step",  Callback = function()
+      SdaDancefunction:Dance(4715102040)
+end})
+
+Tab:AddButton({Title = "The Roll",  Callback = function()
+      SdaDancefunction:Dance(4699826237)
+end})
+
+Tab:AddButton({Title = "Loud Laugh",  Callback = function()
+      SdaDancefunction:Dance(4846000379)
+end})
+
+Tab:AddButton({Title = "Anthony Shuffle Dance",  Callback = function()
+      SdaDancefunction:Dance(4837748730)
+end})
+
+Tab:AddButton({Title = "Thriller Dance",  Callback = function()
+      SdaDancefunction:Dance(4699820365)
+end})
+
+Tab:AddButton({Title = "Spongebob Dance",  Callback = function()
+      SdaDancefunction:Dance(4896926493)
+end})
+
+Tab:AddButton({Title = "Drip Dance",  Callback = function()
+      SdaDancefunction:Dance(4959380041)
+end})
+
+Tab:AddButton({Title = "Side Step Dance",  Callback = function()
+      SdaDancefunction:Dance(4876471547)
+end})
+
+Tab:AddButton({Title = "Running In Terror",  Callback = function()
+      SdaDancefunction:Dance(5009879973)
+end})
+
+Tab:AddButton({Title = "Cruisin Dance",  Callback = function()
+      SdaDancefunction:Dance(5079952034)
+end})
+
+Tab:AddButton({Title = "Lose Control Dance",  Callback = function()
+      SdaDancefunction:Dance(5754164114)
+end})
+
+Tab:AddButton({Title = "Caramelldansen Dance",  Callback = function()
+      SdaDancefunction:Dance(5754318221)
+end})
+
+Tab:AddButton({Title = "Boogie Down Dance",  Callback = function()
+      SdaDancefunction:Dance(5025546871)
+end})
+
+Tab:AddButton({Title = "Kazotsky Kick",  Callback = function()
+      SdaDancefunction:Dance(4846209506)
+end})
+
+Tab:AddButton({Title = "Grabby Dance",  Callback = function()
+      SdaDancefunction:Dance(3643129020)	
+end})
+
+Tab:AddButton({Title = "ScoutRobics Dance",  Callback = function()
+      SdaDancefunction:Dance(3675001079)
+end})
+
+Tab:AddButton({Title = "Praise The Lord Dance",  Callback = function()
+      SdaDancefunction:Dance(4837753372)	
+end})
+
+Tab:AddButton({Title = "Gang Torture Dance",  Callback = function()
+      SdaDancefunction:Dance(4109162757)
+end})
+
+Tab:AddButton({Title = "Comeback Dance",  Callback = function()
+      SdaDancefunction:Dance(4256820336)
+end})
+
+Tab:AddButton({Title = "Radical Dance",  Callback = function()
+      SdaDancefunction:Dance(4686555525)
+end})
+
+Tab:AddButton({Title = "Spook Shufflen Dance",  Callback = function()
+      SdaDancefunction:Dance(4396327238)
+end})
+
+Tab:AddButton({Title = "Carlton Dance",  Callback = function()
+      SdaDancefunction:Dance(4837749916)
+end})
+
+Tab:AddButton({Title = "Sniper Dance",  Callback = function()
+      SdaDancefunction:Dance(4677930905)
+end})
+
+Tab:AddButton({Title = "Spy Dance",  Callback = function()
+      SdaDancefunction:Dance(4677880377)
+end})
+
+Tab:AddButton({Title = "Peter Parker Dance",  Callback = function()
+      SdaDancefunction:Dance(4776598075)
+end})
+
+Tab:AddButton({Title = "Carson Shearer Dance",  Callback = function()
+      SdaDancefunction:Dance(5806573931)
+end})
+
+Tab:AddButton({Title = "Rewind Dance",  Callback = function()
+      SdaDancefunction:Dance(5011408603)
+end})
+
+Tab:AddButton({Title = "Freestyling Dance",  Callback = function()
+      SdaDancefunction:Dance(4432024917)
+end})
+
+Tab:AddButton({Title = "Wess Dance",  Callback = function()
+      SdaDancefunction:Dance(4499527946)
+end})
+
+Tab:AddButton({Title = "Flipping Smooth",  Callback = function()
+      SdaDancefunction:Dance(4539565912)
+end})
+
+Tab:AddButton({Title = "Conga Dance",  Callback = function()
+      SdaDancefunction:Dance(4572096542)
+end})
+
+Tab:AddButton({Title = "Skibidi Dance",  Callback = function()
+      SdaDancefunction:Dance(4835795413)
+end})
+
+Tab:AddButton({Title = "Spasm Dance",  Callback = function()
+      SdaDancefunction:Dance(3383725246)
+end})
+
+end
+
+
+if plr.Character.Humanoid.RigType == Enum.HumanoidRigType.R15 then
+
+local function PlayAnim(id,time,speed)
+	pcall(function()
+		plr.Character.Animate.Disabled = false
+		local hum = plr.Character.Humanoid
+		local animtrack = hum:GetPlayingAnimationTracks()
+		for i,track in pairs(animtrack) do
+			track:Stop()
+		end
+		plr.Character.Animate.Disabled = true
+		local Anim = Instance.new("Animation")
+		Anim.AnimationId = "rbxassetid://"..id
+		local loadanim = hum:LoadAnimation(Anim)
+		loadanim:Play()
+		loadanim.TimePosition = time
+		loadanim:AdjustSpeed(speed)
+		loadanim.Stopped:Connect(function()
+			plr.Character.Animate.Disabled = false
+			for i, track in pairs (animtrack) do
+        		track:Stop()
+    		end
+		end)
+	end)
+end
+
+local function StopAnim()
+	plr.Character.Animate.Disabled = false
+    local animtrack = plr.Character.Humanoid:GetPlayingAnimationTracks()
+    for i, track in pairs (animtrack) do
+        track:Stop()
+    end
+end
+
+local Section = Tab:AddSection("FE R15 Animations")
+
+Tab:AddButton({Title = "FE R15&R6 Animations Gui",  Callback = function()
+      	loadstring(game:HttpGet(('https://pastebin.com/raw/1p6xnBNf'),true))()
+end})
+
+Tab:AddButton({Title = "FE Custom R15 Animations Gui",Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/GamingScripter/Animation-Hub/main/Animation%20Gui", true))()
+end})
+
+Tab:AddButton({Title = "FE R15 Emotes",Callback = function()
+     	loadstring(game:HttpGetAsync("https://gist.githubusercontent.com/RedZenXYZ/3da6af1961efa275de6c3c2a6dbace03/raw/bb027f99cec0ea48ef9c5eabfb9116ddff20633d/FE%2520Emotes%2520Gui"))()
+end})
+
+
+Tab:AddButton({
+	Title = "FE Zombie Animation",
+	Callback = function()
+      	local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=3489171152"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=3489171152"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=3489174223"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=3489173414"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616161997"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616156119"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616157476"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Werewolf Animation",
+	Callback = function()
+      	local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1083195517"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1083214717"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1083178339"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1083216690"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1083218792"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1083182000"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1083189019"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Cartoon Animation",
+	Callback = function()
+      local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=742637544"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=742638445"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=742640026"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=742638842"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=742637942"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=742636889"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=742637151"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false	
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Patrol Animation",
+	Callback = function()
+      	local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1149612882"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1150842221"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1151231493"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1150967949"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1150944216"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1148811837"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1148863382"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Toy Animation",
+	Callback = function()
+     local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=782841498"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=782845736"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=782843345"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=782842708"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=782847020"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=782843869"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=782846423"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false 	
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Knight Animation",
+	Callback = function()
+      	local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=657595757"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=657568135"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=657552124"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=657564596"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=658409194"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=658360781"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=657600338"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Cowboy Animation",
+	Callback = function()
+      local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1014390418"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1014398616"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1014421541"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1014401683"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1014394726"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1014380606"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1014384571"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false	
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Princess Animation",
+	Callback = function()
+      local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=941003647"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=941013098"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=941028902"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=941015281"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=941008832"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=940996062"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=941000007"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false	
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Ninja Animation",
+	Callback = function()
+      local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=656117400"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=656118341"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=656121766"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=656118852"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=656117878"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=656114359"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=656115606"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false	
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Zombie Animation",
+	Callback = function()
+      	local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=616158929"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=616160636"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616168032"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=616163682"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616161997"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616156119"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616157476"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false
+  	end    
+})
+Tab:AddButton({
+	Title = "Vampire Animation",
+	Callback = function()
+      		local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1083445855"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1083450166"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1083473930"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1083462077"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1083455352"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1083439238"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1083443587"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Popstar Animation",
+	Callback = function()
+      	local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1212900985"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1212900985"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1212980338"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1212980348"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1212954642"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1213044953"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1212900995"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Hero Animation",
+	Callback = function()
+      local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=616111295"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=616113536"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616122287"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=616117076"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616115533"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616104706"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616108001"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false	
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Mage Animation",
+	Callback = function()
+      local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=707742142"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=707855907"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=707897309"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=707861613"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=707853694"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=707826056"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=707829716"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false	
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Confident Animation",
+	Callback = function()
+      	local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1069977950"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1069987858"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1070017263"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1070001516"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1069984524"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1069946257"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1069973677"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Ghost Animation",
+	Callback = function()
+      	local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=616006778"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=616008087"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616010382"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=616013216"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616008936"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616003713"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616005863"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Elder Animation",
+	Callback = function()
+      local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=845397899"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=845400520"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=845403856"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=845386501"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=845398858"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=845392038"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=845396048"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false	
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Sneaky Animation",
+	Callback = function()
+      	local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1132473842"
+    Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1132477671"
+    Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1132510133"
+    Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1132494274"
+    Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1132489853"
+    Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1132461372"
+    Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1132469004"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Levitation Animation",
+	Callback = function()
+     local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=616006778"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=616008087"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616013216"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=616010382"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616008936"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616003713"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616005863"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false 	
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Pirate Animation",
+	Callback = function()
+      local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1132473842"
+    Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1132477671"
+    Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1132510133"
+    Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1132494274"
+    Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1132489853"
+    Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1132461372"
+    Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1132469004"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false	
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Astronaut Animation",
+	Callback = function()
+      	local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=891621366"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=891633237"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=891667138"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=891636393"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=891627522"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=891609353"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=891617961"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false
+  	end    
+})
+end
+
+end
