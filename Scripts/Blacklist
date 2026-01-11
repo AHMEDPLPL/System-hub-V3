@@ -1,4 +1,4 @@
--- you will only get banned from the hub when you spawn feedback
+-- you will only get banned from the hub when you spawn feedback lol
 return {
     [""] = true
 }
