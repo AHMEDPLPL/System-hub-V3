@@ -1,3 +1,5 @@
+--hi
+
 local currentToolSize = Vector3.new()
 local currentGripPos = Vector3.new()
 
