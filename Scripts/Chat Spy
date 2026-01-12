@@ -1,4 +1,5 @@
-if game:GetService("TextChatService").ChatVersion == Enum.ChatVersion.TextChatService then
+if game:GetService("TextChatService").ChatVersion ==
+Enum.ChatVersion.TextChatService then -- hi
        
 local TextChatService = game:GetService("TextChatService")
 local Players = game:GetService("Players")
